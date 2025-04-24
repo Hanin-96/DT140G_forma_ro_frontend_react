@@ -1,0 +1,13 @@
+.contactLinks h4 {
+    margin-top: 1rem;
+    font-size: 20px;
+    color: #1e1e1e;
+    font-size: 20px;
+}
+.contactLinks {
+    margin-top: 1rem;
+}
+
+.contactLinks li, a {
+    color: #1e1e1e;
+}

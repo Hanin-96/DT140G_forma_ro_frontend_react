@@ -1,44 +1,55 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
+import AyurvedaStartPage from "./pages/Ayurveda/AyurvedaStartPage";
+import DoshaPage from "./pages/Ayurveda/DoshaPage";
+import HomePage from "./pages/HomePage";
 
 
 const router = createBrowserRouter([
     {
-        //Huvudrouting
+        path: "/hem",
+        element: (
+            <HomePage />
+        ),
+    },
+    {
         path: "/",
         element: <Layout />,
         children: [
             {
-                //Huvudrouting
-                path: "/",
-                element: (
-                    <div>My Page Content</div>
-
-                ),
-            },
-            {
                 path: ":id",
                 element: (
-                    <div>My Page Content</div>
-
+                    <div>Default dynamisk sida</div>
+                ),
+            },
+            //Ayurveda sidor
+            {
+                path: "/ayurveda-start",
+                element: (
+                    <AyurvedaStartPage />
                 ),
             },
             {
-                path: "/login",
+                path: "/ayurveda-inlagg",
                 element: (
-                    <div>My Page Content</div>
-
-                ),
+                    <div>Ayurveda inlägg</div>
+                )
             },
             {
-                path: "/mypage",
+                path: "/ayurveda-inlagg/:id",
                 element: (
-                    <div>My Page Content</div>
+                    <div>Ayurveda specifik inlägg</div>
+                )
+            },
+            {
+                path: "/dosha-quiz",
+                element: (
+                    <DoshaPage />
                 )
             },
 
+            //Keramik sidor
         ]
-
     }
 
 

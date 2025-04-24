@@ -1,12 +1,7 @@
 import { NavLink } from "react-router-dom";
 import HeaderModuleStyle from "./HeaderStyle.module.css";
 import { useEffect, useState } from "react";
-
-//Nav-meny interface
-interface MenuLink {
-    href: string;
-    pageText: string;
-}
+import { MenuLink } from "../types/MenuLinks";
 
 function Header() {
     const [showMenu, setMenu] = useState(false);
@@ -61,38 +56,16 @@ function Header() {
                         <ul>
                             {menuLinks.map((link, index) => (
                                 <li key={index}>
-                                    <a href={link.href}>
-                                        {link.pageText}
-                                    </a>
+                                    <NavLink to={link.href}>{link.pageText}</NavLink>
                                 </li>
                             ))}
-                        </ul>
-
-                    </nav>
-
-                    <NavLink to="/">Test</NavLink>
-
-                    <nav className={`${HeaderModuleStyle.navMain} ${showMenu ? HeaderModuleStyle.navMobil : ""}`}>
-
-                        {
-
-                        }
-                        <ul>
-                            <li><NavLink to="/" onClick={toggleMenuBar} className={({ isActive }) => isActive ? HeaderModuleStyle.active : ""}>Start</NavLink></li>
-
-                            <li>
-                                <NavLink to="/mypage" onClick={toggleMenuBar} className={({ isActive }) => isActive ? HeaderModuleStyle.active : ""}>Ayurveda</NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink to="/login" onClick={toggleMenuBar} className={({ isActive }) => isActive ? HeaderModuleStyle.active : ""}>Keramik</NavLink>
-                            </li>
                         </ul>
                         <div className={`${HeaderModuleStyle.hamburger} ${showMenu ? HeaderModuleStyle.hamburger && HeaderModuleStyle.active : ""}`} onClick={toggleMenuBar}>
                             <span className={HeaderModuleStyle.bar}></span>
                             <span className={HeaderModuleStyle.bar}></span>
                             <span className={HeaderModuleStyle.bar}></span>
                         </div>
+
                     </nav>
 
 

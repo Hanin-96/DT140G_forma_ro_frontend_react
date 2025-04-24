@@ -1,26 +1,46 @@
+import { useEffect, useState } from 'react';
+import logotypFooter from '../assets/logo/logotyp_forma_ro_200x160.svg';
+import footerStyle from './FooterStyle.module.css';
+
 function Footer() {
-    const footerStyle: object = {
-      backgroundColor: "#1e1e1e",
-      padding: "1rem",
-      color: "white",
-      lineHeight: "180%",
-      fontSize: "1.5rem",
-      textAlign: "center"
-  
+
+  const [contactFooterLinks, setcontactFooterLinks] = useState(null);
+  const [errorLinks, setErrorLinks] = useState("");
+
+  const getContactLinks = async () => {
+    try {
+
+      const response = await fetch("http://localhost:8002/wp-json/wp/v2/posts?slug=kontaktuppgifter-sidfot&_fields=content", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setcontactFooterLinks(data.length > 0 ? data[0].content.rendered : "Ingen kontaktinformation är tillgänglig");
+      }
+    } catch (error) {
+      setErrorLinks("Det gick inte att hämta kontaktuppgifter i sidfoten")
     }
-    return (
-      <>
-        <footer style={footerStyle}>
-          <p>&copy;PicCollect</p>
-          <p>Moment 3</p>
-          <p>Hanin Farhan</p>
-          <p>hafa2300@studenter.miun.se</p>
-          <p>DT210G - Fördjupad frontend-utveckling</p>
-          <p>Webbutveckling 120hp</p>
-          <p>Mittuniversitet</p>
-        </footer>
-      </>
-    )
+
   }
-  
-  export default Footer
+  //useEffect för att hämta in poster
+  useEffect(() => {
+    getContactLinks();
+  }, []);
+
+  return (
+    <>
+      <footer className={`${footerStyle.contactLinks} bg-forma_ro_green font-Text text-forma_ro_text p-4`}>
+        <div className='flex gap-4 w-width_1000 max-w-4xl mx-auto'>
+          <img src={logotypFooter} alt="logotyp" style={{ maxWidth: "100px", width: "100%" }} />
+          <div dangerouslySetInnerHTML={{ __html: contactFooterLinks || errorLinks }}></div>
+        </div>
+      </footer>
+    </>
+  )
+}
+
+export default Footer
