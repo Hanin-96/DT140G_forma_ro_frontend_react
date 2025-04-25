@@ -21,13 +21,21 @@ html {
   padding: 0;
   box-sizing: border-box;
   height: 100%;
+  font-size: 62.5%;
 }
 
 a {
   font-weight: 500;
   color: #1e1e1e;
   text-decoration: inherit;
+  font-family: "Source Sans 3", sans-serif;
 }
+
+
+p {
+  font-family: "Source Sans 3", sans-serif;
+}
+
 a:hover {
   text-decoration: underline 1px solid #1e1e1e;
 }
