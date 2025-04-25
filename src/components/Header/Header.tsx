@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import HeaderModuleStyle from "./HeaderStyle.module.css";
 import { useEffect, useState } from "react";
-import { MenuLink } from "../types/MenuLinks";
+import { MenuLink } from "../../types/MenuLinks";
 
 function Header() {
     const [showMenu, setMenu] = useState(false);

@@ -15,8 +15,12 @@ export default {
         forma_ro_h1: ["42px", { lineHeight: "48px" }]
       },
       colors: {
+        forma_ro_black: "#1e1e1e",
+      },
+      backgroundColor: {
         forma_ro_green: "#8A987A",
-        forma_ro_black: "#1e1e1e"
+        forma_ro_red: "#D58B6A",
+        forma_ro_orange: "#E09F3E",
       },
       maxWidth: {
         width_1000: "1000px",

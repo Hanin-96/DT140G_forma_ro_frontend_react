@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import logotypFooter from '../assets/logo/logotyp_forma_ro_200x160.svg';
+import logotypFooter from '../../assets/logo/logotyp_forma_ro_200x160.svg';
 import footerStyle from './FooterStyle.module.css';
+import parse from 'html-react-parser';
 
 function Footer() {
 
@@ -36,7 +37,8 @@ function Footer() {
       <footer className={`${footerStyle.contactLinks} bg-forma_ro_green font-Text text-forma_ro_text p-4`}>
         <div className='flex gap-4 w-width_1000 max-w-4xl mx-auto'>
           <img src={logotypFooter} alt="logotyp" style={{ maxWidth: "100px", width: "100%" }} />
-          <div dangerouslySetInnerHTML={{ __html: contactFooterLinks || errorLinks }}></div>
+          {/*Omvandlar html strängar till komponenter*/}
+          <div>{contactFooterLinks ? parse(contactFooterLinks) : errorLinks}</div>
         </div>
       </footer>
     </>

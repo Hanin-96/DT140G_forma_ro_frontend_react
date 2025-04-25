@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import AyurvedaStartPage from "./pages/Ayurveda/AyurvedaStartPage";
 import DoshaPage from "./pages/Ayurveda/DoshaPage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home/HomePage";
+import PageContentPage from "./pages/PageContentPage"
 
 
 const router = createBrowserRouter([
@@ -17,9 +18,9 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                path: ":id",
+                path: ":slug",
                 element: (
-                    <div>Default dynamisk sida</div>
+                    <PageContentPage />
                 ),
             },
             //Ayurveda sidor
@@ -49,6 +50,12 @@ const router = createBrowserRouter([
             },
 
             //Keramik sidor
+            {
+                path: "/keramik-start",
+                element: (
+                    <div>Keramik start</div>
+                )
+            },
         ]
     }
 
