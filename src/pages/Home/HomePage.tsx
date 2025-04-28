@@ -71,7 +71,7 @@ function HomePage() {
 
                                     <div className='mx-auto flex justify-center gap-[100px]'>
                                         <div>
-                                            <Link to="/ayurveda-start">
+                                            <Link to="/ayurveda">
                                                 <div className='relative'>
                                                     <div className={`${HomePageStyle.imageCircle} ${HomePageStyle.borderAyurveda}`}></div>
                                                     {images.map((img, i) =>
@@ -90,7 +90,7 @@ function HomePage() {
                                         </div>
 
                                         <div>
-                                            <Link to="/keramik-start">
+                                            <Link to="/keramik">
                                                 <div className='relative'>
                                                     <div className={`${HomePageStyle.imageCircle} ${HomePageStyle.borderKeramik}`}></div>
                                                     {images.map((img, i) =>

@@ -12,6 +12,7 @@ export default {
       },
       fontSize: {
         forma_ro_text: ["16px", { lineHeight: "24px" }],
+        forma_ro_btn: ["18px", { lineHeight: "28px", fontWeight:"600" }],
         forma_ro_h1: ["42px", { lineHeight: "48px" }]
       },
       colors: {

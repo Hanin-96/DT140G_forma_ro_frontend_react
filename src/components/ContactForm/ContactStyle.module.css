@@ -1,0 +1,39 @@
+.contactFormContainer {
+    overflow: hidden;
+    max-height: 0;
+
+}
+
+.contactFormSlideDown {
+    animation: 0.5s forwards slideDown linear;
+    max-height: 0;
+}
+
+.contactFormSlideUp {
+    max-height: 60rem;
+    animation: 0.5s forwards slideUp linear;
+}
+
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+    }
+
+    to {
+        max-height: 60rem;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        max-height: 60rem;
+
+    }
+
+    to {
+        max-height: 0;
+    }
+}
+
+
