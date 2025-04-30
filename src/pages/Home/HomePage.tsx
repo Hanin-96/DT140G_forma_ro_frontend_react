@@ -66,7 +66,7 @@ function HomePage() {
                     ) :
                         (
                             <div>
-                                <div className='max-w-width_1000 mx-auto px-4 mb-[200px] mt-[100px]'>
+                                <div className='max-w-width_1000 mx-auto px-4 mb-[300px] mt-[100px]'>
                                     {errorContent && <p>{errorContent}</p>}
 
                                     <div className='mx-auto flex justify-center gap-[100px]'>

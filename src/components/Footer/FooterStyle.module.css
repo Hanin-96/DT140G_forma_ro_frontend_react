@@ -4,10 +4,21 @@
     color: #1e1e1e;
     font-size: 20px;
 }
-.contactLinks {
-    margin-top: 1rem;
+
+.contactLinks>div {
+    max-width: 100rem;
+    width: 100%;
+    justify-content: space-between;
 }
 
-.contactLinks li, a {
+.contactLinks>div>div>div{
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.contactLinks li,
+a {
     color: #1e1e1e;
 }

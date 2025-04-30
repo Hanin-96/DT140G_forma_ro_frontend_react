@@ -4,12 +4,13 @@ import AyurvedaStartPage from "./pages/Ayurveda/AyurvedaStartPage";
 import DoshaPage from "./pages/Ayurveda/DoshaPage";
 import HomePage from "./pages/Home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
-import AboutPage from "./pages/AboutPage";
+import AboutPage from "./pages/About/AboutPage";
 import CeramicStartPage from "./pages/Keramik/CeramicStartPage";
 import GalleriPage from "./pages/Keramik/GalleriPage";
 import AyurvedaPostsPage from "./pages/Ayurveda/AyurvedaPostsPage";
 import ProductPage from "./pages/Keramik/ProductPage";
 import PostPage from "./pages/Ayurveda/PostPage";
+import CalendarPage from "./pages/Calendar/CalendarPage";
 
 
 const router = createBrowserRouter([
@@ -35,6 +36,12 @@ const router = createBrowserRouter([
                 path: "/kontakt",
                 element: (
                     <ContactPage />
+                ),
+            },
+            {
+                path: "/kalender",
+                element: (
+                    <CalendarPage />
                 ),
             },
             {
