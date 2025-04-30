@@ -5,7 +5,7 @@
     border-bottom-color: transparent;
     border-radius: 50%;
     animation: loadingAnim 1s linear infinite;
-    margin: 0 auto;
+    margin: 2rem auto;
 }
 
 @keyframes loadingAnim {

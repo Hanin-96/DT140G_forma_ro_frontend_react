@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import HeaderModuleStyle from "./HeaderStyle.module.css";
 import { useEffect, useState } from "react";
 import { MenuLink } from "../../types/MenuLinks";
-import { PageData } from "../../types/MenuLinks";
+import { PageData } from "../../types/PageData";
 import logotypHeader from '../../assets/logo/logotyp_forma_ro_200x160.svg';
 import { Link } from 'react-router-dom';
 

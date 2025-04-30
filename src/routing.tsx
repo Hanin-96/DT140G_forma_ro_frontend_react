@@ -3,7 +3,7 @@ import Layout from "./components/Layout";
 import AyurvedaStartPage from "./pages/Ayurveda/AyurvedaStartPage";
 import DoshaPage from "./pages/Ayurveda/DoshaPage";
 import HomePage from "./pages/Home/HomePage";
-import ContactPage from "./pages/ContacttPage";
+import ContactPage from "./pages/Contact/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import CeramicStartPage from "./pages/Keramik/CeramicStartPage";
 import GalleriPage from "./pages/Keramik/GalleriPage";
@@ -15,6 +15,12 @@ import PostPage from "./pages/Ayurveda/PostPage";
 const router = createBrowserRouter([
 
     {
+        path: "/hem",
+        element: (
+            <HomePage />
+        ),
+    },
+    {
         path: "/",
         element: <Layout />,
         children: [
@@ -24,12 +30,7 @@ const router = createBrowserRouter([
                     <div>Valfri default sida</div>
                 ),
             },
-            {
-                path: "/hem",
-                element: (
-                    <HomePage />
-                ),
-            },
+           
             {
                 path: "/kontakt",
                 element: (

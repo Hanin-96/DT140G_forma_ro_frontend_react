@@ -78,7 +78,7 @@ function HomePage() {
                                                         img.caption.toLowerCase().includes("ayurveda") && (
                                                             <article key={`ayurveda-${i}`} className="w-[300px] h-[300px] max-w-full mx-auto">
                                                                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover shadow-md rounded-full mb-10" />
-                                                                <button className='w-full bg-forma_ro_orange text-forma_ro_black py-2 px-4 rounded-lg text-[1.8rem] mt-10'>
+                                                                <button className='w-full bg-forma_ro_orange text-forma_ro_black py-2 px-4 rounded-lg text-[2rem] mt-10'>
                                                                     {img.caption}
                                                                 </button>
                                                             </article>
@@ -97,7 +97,7 @@ function HomePage() {
                                                         img.caption.toLowerCase().includes("keramik") && (
                                                             <div key={`keramik-${i}`} className="w-[300px] h-[300px] max-w-full mx-auto">
                                                                 <img src={img.src} alt={img.alt} className="w-full h-full object-cover shadow-md rounded-full mb-10" />
-                                                                <button className='w-full mt-10 bg-forma_ro_red text-forma_ro_black py-2 px-4 rounded-lg text-[1.8rem]'>
+                                                                <button className='w-full mt-10 bg-forma_ro_red text-forma_ro_black py-2 px-4 rounded-lg text-[2rem]'>
                                                                     {img.caption}
                                                                 </button>
                                                             </div>

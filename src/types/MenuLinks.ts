@@ -7,9 +7,4 @@ export interface MenuLink {
     children: MenuLink[];
 }
 
-export interface PageData {
-    slug: string;
-    title: { rendered: string };
-    parent: number;
-    id: number;
-}
+
