@@ -25,9 +25,11 @@ function AboutPage() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        const extractedBlockGroups = extractBlockGroups(data[0].content.rendered);
+        console.log(extractedBlockGroups);
 
         if (data.length > 0) {
-          setAboutInfo(data);
+          setAboutInfo(extractedBlockGroups);
           setLoadingSpinner(false);
 
         } else {
@@ -41,6 +43,15 @@ function AboutPage() {
     }
   }
 
+  const extractBlockGroups = (html: string) => {
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    return Array.from(container.querySelectorAll(".wp-block-group")).map(
+      (el) => el.outerHTML
+    );
+  }
+
+  /*
   const getAboutPosts = async () => {
     setLoadingSpinner(true);
     try {
@@ -66,11 +77,12 @@ function AboutPage() {
       setLoadingSpinner(false);
     }
   }
+    */
 
   //useEffect för att hämta in Om sida innehåll
   useEffect(() => {
     getAboutPageInfo();
-    getAboutPosts();
+    //getAboutPosts();
   }, []);
 
   return (
@@ -86,58 +98,25 @@ function AboutPage() {
             <>
               <div className={AboutStyle.aboutContainer}>
                 {aboutInfo.length > 0 ? (
-                  aboutInfo.map((page: any) => (
-                    <div key={page.id} className={AboutStyle.aboutContent}>
-                      <div className={AboutStyle.aboutText}>
-
-                        <div>
-                          <h1 className="mt-10">{page.title.rendered}</h1>
-                          {parse(page.content.rendered)}
-                        </div>
-                      </div>
-                      <div className={AboutStyle.aboutImg}>
-                        <img src={page._embedded["wp:featuredmedia"][0].source_url} alt={page._embedded["wp:featuredmedia"][0].alt_text || "Thumbnail"} className="max-w-[1050px] w-full" />
-                      </div>
-
+                  aboutInfo.map((block: any, index: number) => (
+                    <div
+                      key={index}
+                      className={
+                        index === 0
+                          ? AboutStyle.blockOne
+                          : index === 1
+                            ? AboutStyle.blockTwo
+                            : index === 2
+                              ? AboutStyle.blockThree
+                              : AboutStyle.blockFour
+                      }
+                    >
+                      <div className="wpBlockWrapper">{parse(block)}</div>
                     </div>
                   ))
                 ) : (
                   <p>Ingen kontaktinformation är tillgänglig</p>
                 )}
-              </div>
-
-              <div className="max-w-[100rem] w-full mx-auto p-8">
-                <div>
-                  {aboutPosts.length > 0 ? (
-                    aboutPosts.map((post: any) =>
-                      post.title.rendered.toLowerCase().includes("keramik") && (
-                        <div key={post.id} className={`${AboutStyle.aboutPosts}`}>
-                          <div>
-                              {parse(post.content.rendered)}
-                          </div>
-                        </div>
-                      ))
-                  ) : (
-                    <p>Inga inlägg</p>
-                  )}
-                </div>
-              </div>
-
-              <div className={`max-w-[100rem] w-full mx-auto p-8`}>
-                <div>
-                  {aboutPosts.length > 0 ? (
-                    aboutPosts.map((post: any) =>
-                      post.title.rendered.toLowerCase().includes("ayurveda") && (
-                        <div key={post.id} className={`${AboutStyle.aboutPosts}`}>
-                          <div>
-                              {parse(post.content.rendered)}
-                          </div>
-                        </div>
-                      ))
-                  ) : (
-                    <p>Inga inlägg</p>
-                  )}
-                </div>
               </div>
             </>
           )}

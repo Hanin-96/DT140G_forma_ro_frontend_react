@@ -1,4 +1,4 @@
-.aboutContainer {
+/*.aboutContainer {
     margin: 0 auto;
     width: 100%;
     position: relative;
@@ -31,7 +31,7 @@
     display: block;
 }
 
-.aboutPosts > div {
+.aboutPosts>div {
     display: flex;
     gap: 2rem;
     border: 2px solid #D9D9D9;
@@ -41,7 +41,62 @@
 .aboutPosts>div>div {
     padding: 1rem;
 }
+
 .aboutPosts p {
     max-width: 55ch;
     width: 100%;
+}
+
+*/
+
+.aboutContainer {
+    display: grid;
+    gap: 1rem;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    grid-template-areas:
+        ". blockTwo blockOne blockOne"
+        ". blockThree blockThree ."
+        ". blockFour blockFour .";
+    grid-template-columns: 1fr minmax(0, 50rem) minmax(0, 50rem) 1fr;
+
+}
+
+.blockOne {
+    color: red;
+    flex: 60%;
+    max-width: 100rem;
+    width: 100%;
+    grid-area: blockOne;
+}
+
+.blockOne img {
+    width: 100%;
+    max-width: 100rem;
+    height: 100%;
+    max-height: 50rem;
+    right: 0;
+    object-fit: cover;
+}
+
+.blockTwo {
+    color: blue;
+    grid-area: blockTwo;
+}
+
+.blockThree {
+    color: green;
+    grid-area: blockThree;
+}
+
+.blockThree :global( .mediaText) {
+    display: flex !important;
+
+}
+
+
+.blockFour {
+    color: yellow;
+    grid-area: blockFour;
 }

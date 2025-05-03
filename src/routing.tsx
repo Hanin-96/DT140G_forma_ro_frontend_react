@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import AyurvedaStartPage from "./pages/Ayurveda/AyurvedaStartPage";
 import DoshaPage from "./pages/Ayurveda/DoshaPage";
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
 
     {
         path: "/hem",
+        element: <Navigate to="/" replace />,
+    },
+    {
+        path: "/",
         element: (
             <HomePage />
         ),
@@ -58,19 +62,19 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: "/ayurveda/inlagg",
+                path: "/ayurveda-inlagg",
                 element: (
                     <AyurvedaPostsPage />
                 )
             },
             {
-                path: "/ayurveda/inlagg/:id",
+                path: "/ayurveda-inlagg/:id",
                 element: (
                     <PostPage />
                 )
             },
             {
-                path: "/ayurveda/dosha-quiz",
+                path: "/ayurveda-dosha-quiz",
                 element: (
                     <DoshaPage />
                 )
@@ -90,13 +94,13 @@ const router = createBrowserRouter([
                 )
             },
             {
-                path: "/keramik/galleri",
+                path: "/keramik-galleri",
                 element: (
                     <GalleriPage />
                 )
             },
             {
-                path: "/keramik/produkt/:id",
+                path: "/keramik-produkt/:id",
                 element: (
                     <ProductPage />
                 )
