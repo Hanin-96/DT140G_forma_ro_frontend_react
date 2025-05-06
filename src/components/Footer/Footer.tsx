@@ -34,7 +34,7 @@ function Footer() {
 
   return (
     <>
-      <footer className={`${footerStyle.contactLinks} bg-forma_ro_grey font-Text text-forma_ro_text p-4`}>
+      <footer className={`${footerStyle.contactLinks} bg-forma_ro_grey font-Text text-forma_ro_text p-4 mt-[30rem]`}>
         <div className='flex gap-4 w-width_1000 mx-auto'>
           <img src={logotypFooter} alt="logotyp" style={{ maxWidth: "100px", width: "100%" }} />
           <div>{contactFooterLinks ? parse(contactFooterLinks) : errorLinks}</div>

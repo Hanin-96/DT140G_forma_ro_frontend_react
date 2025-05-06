@@ -56,7 +56,7 @@ function ContactPage() {
             <p>{error}</p>
           ) : (
             <>
-              <div className="mt-20 border-2 border-b-0 max-w-[100rem] mx-auto border-forma_ro_light_grey_border p-4">
+              <div className="mt-20 border-[1px] border-b-0 max-w-[100rem] mx-auto border-forma_ro_light_grey_border p-4">
                 {contactInfo.length > 0 ? (
                   contactInfo.map((page) => (
                     <div key={page.id}>
