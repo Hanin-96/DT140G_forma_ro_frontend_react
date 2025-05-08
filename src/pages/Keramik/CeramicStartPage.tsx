@@ -115,11 +115,10 @@ function CeramikStartPage() {
                 {ceramicProducts.map((product: any) => (
                   product && (
                     <Link key={product.id} to={`/keramik-produkt/${product.id}`} className={ceramicStartStyle.ceramicProductLink}>
-                      <article className="border-[1px] border-forma_ro_grey rounded-2xl">
+                      <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center">
                         <img src={product.product_thumbnail} alt={product.product_thumbnail_alt} className="rounded-t-2xl max-w-[30rem] max-h-[30rem] object-cover" />
                         <h4 className="text-[20px] p-2 font-semibold">{product.title.rendered}</h4>
                         <p className="p-2">{product.product_price}:-</p>
-                        <p className="p-2">{product.product_description}</p>
                         <button className="flex gap-1 justify-center mx-auto p-2 text-[18px]">Se produkt  <ChevronsRight className="color-forma_ro_black" /></button>
                       </article>
                     </Link>
