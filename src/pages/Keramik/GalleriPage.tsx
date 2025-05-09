@@ -3,6 +3,7 @@ import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerS
 import { Link } from "react-router-dom";
 import { ChevronsRight } from "lucide-react";
 
+
 function GalleriPage() {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [loadingSpinnerPosts, setLoadingSpinnerPosts] = useState(false);
@@ -108,11 +109,11 @@ function GalleriPage() {
                 </div>
 
               </div>
-              <div className="flex flex-wrap gap-16 justify-start">
+              <div className= "flex flex-wrap gap-16 justify-start">
                 {ceramicProducts.map((product: any) => (
                   product && (
-                    <Link key={product.id} to={`/keramik-produkt/${product.id}`}>
-                      <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center">
+                    <Link key={product.id} to={`/keramik-produkt/${product.id}`} className="hover:no-underline">
+                      <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center hover:bg-forma_ro_red">
                         <img src={product.product_thumbnail} alt={product.product_thumbnail_alt} className="rounded-t-2xl max-w-[30rem] max-h-[30rem] object-cover" />
                         <h4 className="text-[20px] p-2 font-semibold">{product.title.rendered}</h4>
                         <p className="p-2">{product.product_price}:-</p>
