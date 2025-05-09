@@ -29,7 +29,7 @@ export default {
         width_1000: "1000px",
       },
       borderColor: {
-        forma_ro_light_grey_border: "#D9D9D9"
+        forma_ro_grey: "#D9D1C3"
       }
     }
 

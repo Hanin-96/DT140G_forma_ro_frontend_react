@@ -81,7 +81,7 @@ function Header() {
                                         <ul className={HeaderModuleStyle.dropdown}>
                                             {link.children.map(child => (
                                                 <li key={child.id}>
-                                                    <NavLink to={child.href}>{child.pageText}</NavLink>
+                                                    <NavLink to={child.href} className={({ isActive }) => `${HeaderModuleStyle.menuItem} ${isActive ? HeaderModuleStyle.active : ""}`}>{child.pageText}</NavLink>
                                                 </li>
                                             ))}
                                         </ul>

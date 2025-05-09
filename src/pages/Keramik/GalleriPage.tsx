@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import { Link } from "react-router-dom";
 import { ChevronsRight } from "lucide-react";
+import Pagination from "../../components/Pagination/Pagination";
 
 
 function GalleriPage() {
-  const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [loadingSpinnerPosts, setLoadingSpinnerPosts] = useState(false);
   const [productsError, setProductsError] = useState("");
   const [ceramicProducts, setCeramicProducts] = useState<any>([]);
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
-  const isLoading = loadingSpinner || loadingSpinnerPosts;
+  //Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
+
+  const isLoading =  loadingSpinnerPosts;
   const getCeramicProducts = async () => {
     setLoadingSpinnerPosts(true);
 
@@ -56,6 +60,7 @@ function GalleriPage() {
 
   }
 
+
   //Hämtar alla kategorier och filtrerar ut unika kategorier
   const setCategoriesList = (products: any) => {
     let categoryList: string[] = [];
@@ -69,6 +74,10 @@ function GalleriPage() {
     console.log("lista", uniqueCategories);
     return uniqueCategories;
   }
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = ceramicProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   //useEffect för att hämta in alla produkter i galleriet
   useEffect(() => {
@@ -109,8 +118,8 @@ function GalleriPage() {
                 </div>
 
               </div>
-              <div className= "flex flex-wrap gap-16 justify-start">
-                {ceramicProducts.map((product: any) => (
+              <div className="flex flex-wrap gap-16 justify-start">
+                {currentProducts.map((product: any) => (
                   product && (
                     <Link key={product.id} to={`/keramik-produkt/${product.id}`} className="hover:no-underline">
                       <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center hover:bg-forma_ro_red">
@@ -123,8 +132,11 @@ function GalleriPage() {
                   )
                 ))}
               </div>
-
-
+              <Pagination
+                totalProducts={ceramicProducts.length}
+                productsPerPage={productsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage} />
             </div>
           )}
         </div>
