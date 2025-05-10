@@ -1,4 +1,4 @@
-//Nav-meny interface
+
 export interface DoshaQuiz {
     question: string;
     vata: string;

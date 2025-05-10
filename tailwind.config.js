@@ -23,13 +23,14 @@ export default {
         forma_ro_red: "#D58B6A",
         forma_ro_orange: "#E09F3E",
         forma_ro_grey: "#D9D1C3",
-        forma_ro_light_grey: "#D9D9D9"
+        forma_ro_light_grey: "#D9D9D9",
+        forma_ro_blue: "#305369"
       },
       maxWidth: {
         width_1000: "1000px",
       },
       borderColor: {
-        forma_ro_light_grey_border: "#D9D9D9"
+        forma_ro_grey: "#D9D1C3"
       }
     }
 

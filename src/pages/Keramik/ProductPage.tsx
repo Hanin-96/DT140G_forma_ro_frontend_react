@@ -2,6 +2,7 @@
 function ProductPage() {
     return (
         <>
+        <p>Produktsida</p>
         </>
     )
 }
