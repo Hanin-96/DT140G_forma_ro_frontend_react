@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import ceramicStartStyle from './CeramicStartStyle.module.css';
 import { ChevronsRight } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function CeramikStartPage() {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
@@ -16,7 +16,7 @@ function CeramikStartPage() {
   const isLoading = loadingSpinner || loadingSpinnerPosts;
 
 
-  const getceramicPageInfo = async () => {
+  const getCeramicPageInfo = async () => {
     setLoadingSpinner(true);
     try {
       const response = await fetch("http://localhost:8002/wp-json/wp/v2/pages?slug=keramik&fields=id,title,content,_embedded", {
@@ -82,7 +82,7 @@ function CeramikStartPage() {
 
   //useEffect för att hämta in Om sida innehåll
   useEffect(() => {
-    getceramicPageInfo();
+    getCeramicPageInfo();
     getCeramicProducts();
   }, []);
   return (

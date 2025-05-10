@@ -13,7 +13,7 @@ function GalleriPage() {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10;
+  const productsPerPage = 9;
 
   const isLoading =  loadingSpinnerPosts;
   const getCeramicProducts = async () => {

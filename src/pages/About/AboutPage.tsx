@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AboutData } from "../../types/AboutData";
-import parse from 'html-react-parser';
+import parse, {DOMNode, domToReact} from 'html-react-parser';
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import AboutStyle from './AboutStyle.module.css';
 import { Link } from 'react-router-dom';
@@ -63,9 +63,25 @@ function AboutPage() {
             <p>{error}</p>
           ) : (
             <div className={AboutStyle.aboutContainer}>
-              {aboutInfo && parse(aboutInfo)}
-              
-            </div>
+            {aboutInfo &&
+              parse(aboutInfo, {
+                replace: (node: any) => {
+                  if (node.name === "a" && node.attribs?.href) {
+                    const href = node.attribs.href;
+                    const isInternal = href.startsWith("/")
+          
+                    if (isInternal) {
+                      return (
+                        <Link to={href}>
+                          {domToReact(node.children)}
+                        </Link>
+                      );
+                    }
+                  }
+           
+                },
+              })}
+          </div>
           )}
         </div>
       )}
