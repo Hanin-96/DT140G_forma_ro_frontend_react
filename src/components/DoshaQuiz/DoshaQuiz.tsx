@@ -1,9 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { Question } from '../../types/DoshaQuiz'
+import quizStyle from './doshaQuiz.module.css';
+import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 
 function DoshaQuiz() {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [error, setError] = useState("");
+    const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
+    const [userAnswers, setUserAnswers] = useState<{ [questionId: number]: string }>({});
+
+    const [showResult, setShowResult] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+
+    const [hasStartedQuiz, setHasStartedQuiz] = useState(false);
+
+
+    const [vataCount, setVataCount] = useState(0);
+    const [pittaCount, setPittaCount] = useState(0);
+    const [kaphaCount, setKaphaCount] = useState(0);
+
 
     const getQuizData = async () => {
         try {
@@ -25,6 +42,8 @@ function DoshaQuiz() {
 
         } catch (error) {
             setError("Ingen quiz information är tillgänglig")
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -33,36 +52,172 @@ function DoshaQuiz() {
         getQuizData();
     }, []);
 
-    //Hantera svar
+    if (questions.length === 0) return <div>Laddar quiz...</div>;
+
+    //Hantera användares svar
+    const handleUserAnswer = (doshaKey: string, index: number, questionId: number) => {
+        setSelectedAnswerIndex(index);
+        //lagrar användares svar till specifika frågor
+        setUserAnswers((answers) => ({ ...answers, [questionId]: doshaKey }));
+    }
 
     //Hantera klicka på nästa
+    const onClickNext = () => {
+        setSelectedAnswerIndex(null);
+        if (activeQuestionIndex < questions.length - 1) {
+            setActiveQuestionIndex(activeQuestionIndex + 1);
+        } else {
 
-    //Hantera klicka på föregående
+            //Gör om objekt till lista
+            Object.values(userAnswers).forEach((dosha) => {
+                switch (dosha) {
+                    case 'vata':
+                        setVataCount((prev) => prev + 1);
+                        break;
+                    case 'pitta':
+                        setPittaCount((prev) => prev + 1);
+                        break;
+                    case 'kapha':
+                        setKaphaCount((prev) => prev + 1);
+                        break;
+                    default:
+                        console.log("Dosha existerar inte: ", dosha)
+                }
+            });
 
-    //Räkna ut dominant dosha --> resultat
+            setShowResult(true);
+        }
 
-    //Hantera rensning av quiz
+    }
 
+    const getDoshaResult = () => {
+        const result = [
+            { dosha: 'Vata', score: vataCount },
+            { dosha: 'Pitta', score: pittaCount },
+            { dosha: 'Kapha', score: kaphaCount }
+        ];
 
+        const sorted = [...result].sort((a, b) => b.score - a.score);
+        const topDosha = sorted[0].dosha;
 
+        return topDosha;
+
+    }
+
+    const handlePrevious = () => {
+        setActiveQuestionIndex((prev) => prev - 1);
+        const prevQuestionId = questions[activeQuestionIndex - 1].id;
+        const prevDosha = userAnswers[prevQuestionId];
+        const index = Object.keys(questions[activeQuestionIndex - 1].dosha_answers).indexOf(prevDosha);
+        setSelectedAnswerIndex(index !== -1 ? index : null);
+    };
+
+    //Rensar(nollställer) quizet
+    const resetQuiz = () => {
+        setActiveQuestionIndex(0);
+        setSelectedAnswerIndex(null);
+        setUserAnswers({});
+        setShowResult(false);
+        setVataCount(0);
+        setPittaCount(0);
+        setKaphaCount(0);
+
+    };
+
+    const questionNumber = (num: number) => {
+        return num < 10 ? "0" + num : num;
+    };
+
+    const endQuiz = () => {
+        resetQuiz();
+        setHasStartedQuiz(false);
+    }
 
     return (
         <>
-            <h1>Dosha quiz</h1>
+            <div className='max-w-[100rem] mx-auto'>
+                {!hasStartedQuiz ? (
+                    <div>
+                        <h1>Välkommen till Dosha Quiz</h1>
+                        <p>Testa din Dosha</p>
+                        <button onClick={() => setHasStartedQuiz(true)}>
+                            {!loading && "Starta Quiz"}
+                        </button>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
+                    </div>
+                ) : questions.length === 0 ? (
+                    <p>Inga frågor tillgängliga.</p>
+                ) : (
+                    <div className={`${quizStyle.quizContainer} relative w-full max-w-3xl box-border`}>
 
-            <div>
-                <div>
-                    {questions.map((question) => (
-                        <div key={question.id}>
-                            <h2>{question.title.rendered}</h2>
-                            {Object.values(question.dosha_answers).map((answer, index) => (
-                                <p key={index}>{answer}</p>
-                            ))}
-                        </div>
-                    ))}
-                </div>
+                        {!showResult ? (
+                            <div className='w-full max-w-3xl p-4'>
+                                <div className='absolute top-0 right-0 text-forma_ro_black p-4 text-[16px] bg-white m-4 rounded-full'>
+                                    <span className="text-[20px] font-bold">
+                                        {questionNumber(activeQuestionIndex + 1)}
+                                    </span>
+                                    <span className="total-question">
+                                        /{questionNumber(questions.length)}
+                                    </span>
+                                </div>
+                                <h2 className='text-white text-[32px]'>{questions[activeQuestionIndex].title.rendered}</h2>
+                                <ul className='mt-20'>
+                                    {Object.entries(questions[activeQuestionIndex].dosha_answers).map(
+                                        ([doshaKey, answerText], index) => (
+                                            <li
+                                                key={doshaKey}
+                                                onClick={() =>
+                                                    handleUserAnswer(
+                                                        doshaKey,
+                                                        index,
+                                                        questions[activeQuestionIndex].id
+                                                    )
+                                                }
+                                                className={
+                                                    selectedAnswerIndex === index
+                                                        ? quizStyle.selectedAnswer
+                                                        : undefined
+                                                }
+                                            >
+                                                {answerText}
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+                                <div className='flex justify-between gap-8'>
+                                    {activeQuestionIndex > 0 && (
+                                        <button className='w-full p-4 text-[18px] bg-forma_ro_blue border-[1px] text-white rounded-2xl relative' onClick={handlePrevious}>
+                                            <ChevronLeft className='inline stroke-white absolute left-0'/>
+                                            Tillbaka
+                                        </button>
+                                    )}
+                                    <button onClick={onClickNext} disabled={selectedAnswerIndex === null} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl relative'>
+                                        {activeQuestionIndex === questions.length - 1
+                                            ? "Visa Resultat"
+                                            : (<span >Nästa <ChevronRight className=' inline absolute right-0'/></span>)}
+                                    </button>
+                                </div>
+                                <div>
+                                    <button onClick={endQuiz}>
+                                        Avsluta quiz
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-center">
+                                <h3 className='text-white'>Dominant Dosha: {getDoshaResult()}</h3>
+
+                                <div className={quizStyle.result}>
+                                    <p>Vata: {vataCount}</p>
+                                    <p>Pitta: {pittaCount}</p>
+                                    <p>Kapha: {kaphaCount}</p>
+                                </div>
+                                <button onClick={resetQuiz} className='bg-forma_ro_orange text-forma_ro_black'>Gör om testet <RotateCcw className='inline ml-2'/></button>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-
         </>
     )
 }

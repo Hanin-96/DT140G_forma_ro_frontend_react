@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { AboutData } from "../../types/AboutData";
 import parse, {DOMNode, domToReact} from 'html-react-parser';
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import AboutStyle from './AboutStyle.module.css';
