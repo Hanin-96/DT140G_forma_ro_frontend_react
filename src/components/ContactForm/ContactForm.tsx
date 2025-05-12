@@ -6,7 +6,7 @@ import ContactStyle from './ContactStyle.module.css';
 
 //Lucide ikon
 import { ChevronDown, ChevronUp, Send } from 'lucide-react';
-import { FormData, FormErrors } from "../../types/FormData";
+import type { FormData, FormErrors } from "../../types/FormData";
 
 
 function ContactForm() {
@@ -123,6 +123,9 @@ function ContactForm() {
 
         emailjs.send(serviceId, templateId, templateParams, publicKey)
             .then((response) => {
+                if(response.status !== 200) {
+                    formSubmitSend(templateParams);
+                }
                 console.log("Formuläret har skickats", response);
                 setName("");
                 setEmail("");
@@ -144,8 +147,52 @@ function ContactForm() {
             })
             .catch((error) => {
                 console.error("Fel, det gick inte att skicka formuläret", error);
-                setFetchError("Fel. Det gick inte att skicka formuläret - Serverfel")
+                //setFetchError("Fel. Det gick inte att skicka formuläret - Serverfel")
+
+                //Kalla på fallback formsubmit
+                formSubmitSend(templateParams);
             })
+    }
+
+    const formSubmitSend = (templateParams: any) => {
+        //Gör om datan till formdata för att skicka till formSubmit
+        const formData = new FormData();
+        formData.append("Namn:", templateParams.from_name);
+        formData.append("E-post:", templateParams.from_email);
+        formData.append("Telefonnummer:", templateParams.from_phone);
+        formData.append("Ämne", templateParams.subject);
+        formData.append("Meddelande", templateParams.message);
+        formData.append("_captcha", "false"); 
+        formData.append("_template", "table"); 
+        try {
+            fetch("https://formsubmit.co/7bad72b7e79fe36964d64d479d63ebd1", {
+                method: "POST",
+                body: formData,
+            })
+
+                .then((response) => {
+                    if (response.ok) {
+                        setName("");
+                        setEmail("");
+                        setPhone("");
+                        setSubject("");
+                        setMessage("");
+                        setCheckbox(false);
+                        setCaptchaResponse(null);
+                        setSkickat(true);
+                        setSpamError("");
+                        setFetchError("");
+                        setSkickatMsg("Ditt meddelande till FormaRo har skickats.");
+
+                    } else {
+                        setFetchError("Det gick inte att skicka formuläret. Försök igen.");
+                    }
+                })
+
+        } catch (error) {
+            setFetchError("Det gick inte att skicka formuläret. Försök igen.");
+        }
+
     }
 
     const toggleForm = (toggleOpen: boolean) => {
