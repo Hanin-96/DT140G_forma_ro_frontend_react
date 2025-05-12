@@ -140,14 +140,14 @@ function DoshaQuiz() {
 
     return (
         <>
-            <div className='max-w-[100rem] mx-auto'>
+            <div className='max-w-3xl w-full'>
                 {!hasStartedQuiz ? (
                     <div className='bg-forma_ro_blue w-full max-w-3xl p-4 text-white rounded-2xl'>
-                        <h1>Välkommen till Dosha Quiz</h1>
+                        <h1 className='text-center mb-10'>Dosha Quiz</h1>
                         <p className='text-white mt-4 text-center'>Varje fråga har tre alternativ – ett för varje dosha.
                             Starta quiz nedan för att ta reda på din dosha typ.</p>
-                        <button onClick={() => setHasStartedQuiz(true)} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl relative mt-20 text-forma_ro_black'>
-                            Starta Quiz
+                        <button onClick={() => setHasStartedQuiz(true)} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl mt-20 text-forma_ro_black relative'>
+                            Starta Quiz <ChevronRight className='inline absolute right-0'/>
                         </button>
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                     </div>

@@ -1,0 +1,22 @@
+.doshaPostsContainer :global(.vata-block) {
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 4rem;
+}
+
+.doshaPostsContainer :global(.pita-block) {
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 4rem;
+    color: white;
+}
+
+.doshaPostsContainer :global(.pita-block p) {
+    color: white;
+}
+
+.doshaPostsContainer :global(.kapha-block) {
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 4rem;
+}
