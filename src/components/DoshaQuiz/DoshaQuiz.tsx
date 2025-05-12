@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Question } from '../../types/DoshaQuiz'
 import quizStyle from './doshaQuiz.module.css';
-import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Flame, RotateCcw, Sprout, Wind } from 'lucide-react';
 
 function DoshaQuiz() {
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -137,10 +137,11 @@ function DoshaQuiz() {
         <>
             <div className='max-w-[100rem] mx-auto'>
                 {!hasStartedQuiz ? (
-                    <div>
+                    <div className='bg-forma_ro_blue w-full max-w-3xl p-4 text-white rounded-2xl'>
                         <h1>Välkommen till Dosha Quiz</h1>
-                        <p>Testa din Dosha</p>
-                        <button onClick={() => setHasStartedQuiz(true)}>
+                        <p className='text-white mt-4 text-center'>Varje fråga har tre alternativ – ett för varje dosha.
+                            Starta quiz nedan för att ta reda på din dosha typ.</p>
+                        <button onClick={() => setHasStartedQuiz(true)} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl relative mt-20 text-forma_ro_black'>
                             {!loading && "Starta Quiz"}
                         </button>
                         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -160,7 +161,7 @@ function DoshaQuiz() {
                                         /{questionNumber(questions.length)}
                                     </span>
                                 </div>
-                                <h2 className='text-white text-[32px]'>{questions[activeQuestionIndex].title.rendered}</h2>
+                                <h2 className='text-white text-[32px] max-w-[35rem] w-full'>{questions[activeQuestionIndex].title.rendered}</h2>
                                 <ul className='mt-20'>
                                     {Object.entries(questions[activeQuestionIndex].dosha_answers).map(
                                         ([doshaKey, answerText], index) => (
@@ -187,32 +188,33 @@ function DoshaQuiz() {
                                 <div className='flex justify-between gap-8'>
                                     {activeQuestionIndex > 0 && (
                                         <button className='w-full p-4 text-[18px] bg-forma_ro_blue border-[1px] text-white rounded-2xl relative' onClick={handlePrevious}>
-                                            <ChevronLeft className='inline stroke-white absolute left-0'/>
+                                            <ChevronLeft className='inline stroke-white absolute left-0' />
                                             Tillbaka
                                         </button>
                                     )}
                                     <button onClick={onClickNext} disabled={selectedAnswerIndex === null} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl relative'>
                                         {activeQuestionIndex === questions.length - 1
                                             ? "Visa Resultat"
-                                            : (<span >Nästa <ChevronRight className=' inline absolute right-0'/></span>)}
+                                            : (<span >Nästa <ChevronRight className=' inline absolute right-0' /></span>)}
                                     </button>
                                 </div>
                                 <div>
-                                    <button onClick={endQuiz}>
+                                    <button onClick={endQuiz} className='w-full p-4 text-[18px] bg-forma_ro_blue border-[1px] text-white rounded-2xl relative mt-12'>
                                         Avsluta quiz
                                     </button>
                                 </div>
                             </div>
                         ) : (
-                            <div className="text-center">
-                                <h3 className='text-white'>Dominant Dosha: {getDoshaResult()}</h3>
+                            <div className="text-center max-w-3xl w-full p-4">
+                                <h3 className='text-white mb-10'>Din dosha typ: {getDoshaResult()}</h3>
 
                                 <div className={quizStyle.result}>
-                                    <p>Vata: {vataCount}</p>
-                                    <p>Pitta: {pittaCount}</p>
-                                    <p>Kapha: {kaphaCount}</p>
+                                    <h4 className='text-white text-[20px]'>Poäng per dosha:</h4>
+                                    <p className='flex justify-center gap-4'>Vata: {vataCount} <Wind className='stroke-white'/></p>
+                                    <p className='flex justify-center gap-4'>Pitta: {pittaCount} <Flame className='stroke-white' /></p>
+                                    <p className='flex justify-center gap-4'>Kapha: {kaphaCount} <Sprout className='stroke-white' /></p>
                                 </div>
-                                <button onClick={resetQuiz} className='bg-forma_ro_orange text-forma_ro_black'>Gör om testet <RotateCcw className='inline ml-2'/></button>
+                                <button onClick={resetQuiz} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl relative text-forma_ro_black mt-10'>Gör om testet <RotateCcw className='inline ml-2' /></button>
                             </div>
                         )}
                     </div>

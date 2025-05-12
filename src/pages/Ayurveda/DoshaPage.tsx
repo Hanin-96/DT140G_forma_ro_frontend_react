@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import Quiz from "../../components/DoshaQuiz/Quiz";
 import DoshaQuiz from "../../components/DoshaQuiz/DoshaQuiz";
 
 function DoshaPage() {
 
   return (
     <>
-        <DoshaQuiz/>
+      <div className="mt-20 p-4">
+        <DoshaQuiz />
+      </div>
     </>
   )
 }
