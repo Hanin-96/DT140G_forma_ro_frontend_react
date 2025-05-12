@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Question } from '../../types/DoshaQuiz'
 import quizStyle from './doshaQuiz.module.css';
 import { ChevronLeft, ChevronRight, Flame, RotateCcw, Sprout, Wind } from 'lucide-react';
+import LoadingSpinnerStyle from '../LoadingSpinner/LoadingSpinnerStyle.module.css';
 
 function DoshaQuiz() {
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -11,7 +12,7 @@ function DoshaQuiz() {
     const [userAnswers, setUserAnswers] = useState<{ [questionId: number]: string }>({});
 
     const [showResult, setShowResult] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
 
 
     const [hasStartedQuiz, setHasStartedQuiz] = useState(false);
@@ -23,6 +24,8 @@ function DoshaQuiz() {
 
 
     const getQuizData = async () => {
+        setLoadingSpinner(true);
+
         try {
             const response = await fetch("http://localhost:8002/wp-json/wp/v2/dosha_quiz?_fields=title,dosha_answers,id", {
                 method: "GET",
@@ -37,13 +40,15 @@ function DoshaQuiz() {
 
                 if (data.length > 0) {
                     setQuestions(data);
+                    setLoadingSpinner(false);
+
                 }
             }
 
         } catch (error) {
             setError("Ingen quiz information är tillgänglig")
         } finally {
-            setLoading(false);
+            setLoadingSpinner(false);
         }
     }
 
@@ -52,7 +57,7 @@ function DoshaQuiz() {
         getQuizData();
     }, []);
 
-    if (questions.length === 0) return <div>Laddar quiz...</div>;
+    if (questions.length === 0 && loadingSpinner) return <div className={LoadingSpinnerStyle.loadingSpinner}></div>;
 
     //Hantera användares svar
     const handleUserAnswer = (doshaKey: string, index: number, questionId: number) => {
@@ -142,12 +147,12 @@ function DoshaQuiz() {
                         <p className='text-white mt-4 text-center'>Varje fråga har tre alternativ – ett för varje dosha.
                             Starta quiz nedan för att ta reda på din dosha typ.</p>
                         <button onClick={() => setHasStartedQuiz(true)} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl relative mt-20 text-forma_ro_black'>
-                            {!loading && "Starta Quiz"}
+                            Starta Quiz
                         </button>
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                     </div>
                 ) : questions.length === 0 ? (
-                    <p>Inga frågor tillgängliga.</p>
+                    <p className='p-4'>Inga frågor tillgängliga.</p>
                 ) : (
                     <div className={`${quizStyle.quizContainer} relative w-full max-w-3xl box-border`}>
 
@@ -210,7 +215,7 @@ function DoshaQuiz() {
 
                                 <div className={quizStyle.result}>
                                     <h4 className='text-white text-[20px]'>Poäng per dosha:</h4>
-                                    <p className='flex justify-center gap-4'>Vata: {vataCount} <Wind className='stroke-white'/></p>
+                                    <p className='flex justify-center gap-4'>Vata: {vataCount} <Wind className='stroke-white' /></p>
                                     <p className='flex justify-center gap-4'>Pitta: {pittaCount} <Flame className='stroke-white' /></p>
                                     <p className='flex justify-center gap-4'>Kapha: {kaphaCount} <Sprout className='stroke-white' /></p>
                                 </div>
