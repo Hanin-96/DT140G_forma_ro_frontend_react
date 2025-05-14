@@ -100,7 +100,7 @@ const router = createBrowserRouter([
                 )
             },
             {
-                path: "/keramik-produkt/:id",
+                path: "/keramik-produkt/:productId",
                 element: (
                     <ProductPage />
                 )
