@@ -27,12 +27,23 @@ const GalleriPage = observer(() => {
 
           <div className="mb-6">
             <label htmlFor="SortOptions">Kategorier:</label>
-            <select name="sortOptions" id="sortOptions">
+            <select name="sortOptions" id="sortOptions" onChange={(e) => productStore.setCategory(e.target.value)} value={productStore.selectedCategory}>
+              <option value={productStore.defaultCategory}>{productStore.defaultCategory}</option>
               {productStore.productCategories.map((category) => (
                 <option key={category} value={category}>{category}</option>
               ))}
-              <option value={"Alla produkter"}>Alla produkter</option>
+              
             </select>
+
+            <label htmlFor="searchInput">Sök:</label>
+            <input type="text" name="searchInput" id="searchInput"
+            placeholder="Skriv namn på produkt"
+              value={productStore.searchInput}
+              onChange={(e) => {
+                productStore.setSearchInput(e.target.value);
+                productStore.searchProduct();
+              }}
+            />
           </div>
 
           <div className="flex flex-wrap gap-16 justify-start">

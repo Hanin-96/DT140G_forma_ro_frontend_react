@@ -10,9 +10,72 @@ class ProductStore {
     currentPage = 1;
     productsPerPage = 9;
     product: ProductData | null = null;
+    searchInput: string = "";
+    defaultCategory: string = "Alla produkter"
+    selectedCategory: string = this.defaultCategory;
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setSearchInput(value: string) {
+        this.searchInput = value;
+    }
+
+    searchProduct() {
+        console.log("searchInput: ", this.searchInput)
+        //Kontrollerar om searchinput är tomt
+        if (this.searchInput == "") {
+            this.products = this.allProducts;
+            this.selectedCategory = this.defaultCategory;
+            return;
+        }
+        //Kontrollerar om searchinput är mindre än tre tecken
+        if (this.searchInput.length < 3) {
+            //Returnerar om den är mindre än 3 tecken
+            return;
+        }
+        //Nollställer kategorin till alla produkter
+        this.selectedCategory = this.defaultCategory;
+
+        //Filtrerar fram produkter baserad på titel på produkt
+        const searchedProducts = this.allProducts.filter((productItem) => {
+            if (productItem.title.rendered.toLowerCase().includes(this.searchInput.toLowerCase())) {
+                return true;
+            }
+            return false;
+        });
+        this.products = searchedProducts;
+        // Nollställer pagineringen
+        this.setPage(1);
+    }
+
+    //hämtar produkter utifrån kategori
+    setCategory(categoryName: string) {
+        console.log("Kategori namn: ", categoryName);
+        this.selectedCategory = categoryName;
+
+        //Nollställer sökinput
+        this.setSearchInput("");
+
+        if (this.productCategories.includes(categoryName)) {
+            console.log("Kategori finns")
+            const filteredProducts = this.allProducts.filter((productItem) =>
+                //Kontrollerar om kategorin på produkt stämmer överens med kategori som filtreras fram
+                productItem.product_category?.some(
+                    (category: any) => category.name === categoryName
+                )
+            );
+
+            this.products = filteredProducts;
+
+        } else {
+            console.log("Kategori finns inte")
+            this.products = this.allProducts;
+        }
+        //Nollställer paginering
+        this.setPage(1);
+
     }
 
     //Hämtar alla keramik produkter
