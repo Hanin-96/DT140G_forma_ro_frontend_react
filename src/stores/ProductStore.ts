@@ -3,6 +3,7 @@ import { ProductData } from "../types/Product";
 
 class ProductStore {
     products: any[] = [];
+    allProducts: any[] = [];
     productCategories: string[] = [];
     loading: boolean = false;
     error: string = "";
@@ -15,8 +16,22 @@ class ProductStore {
     }
 
     //Hämtar alla keramik produkter
-    async getCeramicProducts() {
-        if (this.products.length > 0) return;
+    async getCeramicProducts(productId = "") {
+        //Om alla produkter redan har hämtats, returnera filtrerad data
+        if (this.allProducts.length > 0) {
+            //Om produkter har hämtats, exkludera aktuell produkt från senaste
+            let filteredData = this.excludeCurrentProduct(productId, this.allProducts);
+
+            //Sortera produkt data efter senaste datum
+            if (filteredData) {
+                const sortedData = filteredData.sort(
+                    (a: { date: string }, b: { date: string }) =>
+                        new Date(b.date).getTime() - new Date(a.date).getTime()
+                );
+                this.products = sortedData
+            }
+            return;
+        }
 
         this.loading = true;
         this.error = "";
@@ -34,8 +49,14 @@ class ProductStore {
 
             if (response.ok) {
                 const data = await response.json();
+                let filteredData = data;
+                this.allProducts = data;
 
-                const sortedData = data.sort(
+                console.log("filtered id: ", productId)
+
+                filteredData = this.excludeCurrentProduct(productId, filteredData);
+
+                const sortedData = filteredData.sort(
                     (a: { date: string }, b: { date: string }) =>
                         new Date(b.date).getTime() - new Date(a.date).getTime()
                 );
@@ -54,15 +75,29 @@ class ProductStore {
                 this.loading = false;
             });
         } finally {
-            this.loading = false;
+            runInAction(() => {
+                this.loading = false;
+            });
         }
     }
 
+    excludeCurrentProduct(productId: string, filteredData: any[]) {
+        if (productId && productId != "") {
+
+            return filteredData.filter((item: { id: number }) => item.id.toString() !== productId);
+        }
+        //returnera samma data om productId är satt
+        return filteredData;
+    }
+
+    //Hämtar produkt utifrån produkt Id
     async getProductById(productId: string) {
 
-        this.loading = true;
-        this.error = "";
-        this.product = null;
+        runInAction(() => {
+            this.loading = true;
+            this.error = "";
+            this.product = null;
+        });
 
         try {
             const response = await fetch(`http://localhost:8002/wp-json/wp/v2/product/${productId}`);
@@ -71,7 +106,6 @@ class ProductStore {
                 const data = await response.json();
                 runInAction(() => {
                     this.product = data;
-                    console.log(data);
                     this.loading = false;
                 });
             }
@@ -109,12 +143,6 @@ class ProductStore {
     setPage(page: number) {
         this.currentPage = page;
     }
-
-    /*
-    findProductById(id: number | null) {
-        return this.products.find((p) => p.id == id);
-    }
-        */
 }
 
 

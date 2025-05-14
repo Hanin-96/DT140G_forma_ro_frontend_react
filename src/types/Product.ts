@@ -14,7 +14,4 @@ export interface ProductData {
     product_description: string;
     product_thumbnail: string;
     product_thumbnail_alt: string;
-
-
-
 }
