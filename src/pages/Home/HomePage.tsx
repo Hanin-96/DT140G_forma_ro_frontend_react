@@ -62,12 +62,11 @@ function HomePage() {
             ) : (
                 <div>
                     {errorContent ? (
-                        <p>{errorContent}</p>
+                        <p className='text-center'>{errorContent}</p>
                     ) :
                         (
                             <div>
                                 <div className='max-w-width_1000 mx-auto px-4 mb-[300px] mt-[100px]'>
-                                    {errorContent && <p>{errorContent}</p>}
 
                                     <div className='mx-auto flex justify-center gap-[100px]'>
                                         <div>

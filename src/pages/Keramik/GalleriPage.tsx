@@ -20,7 +20,7 @@ const GalleriPage = observer(() => {
   return (
     <>
       {productStore.loading && <div className={LoadingSpinnerStyle.loadingSpinner}></div>}
-      {productStore.error && <p>{productStore.error}</p>}
+      {productStore.error && <p className="mx-auto max-w-[100rem] mt-4">{productStore.error}</p>}
       {!productStore.loading && !productStore.error && (
         <div className="mx-auto max-w-[100rem]">
           <h1 className="mt-20 mb-10">Galleri</h1>
