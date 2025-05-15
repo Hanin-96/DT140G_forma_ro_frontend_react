@@ -4,14 +4,16 @@ import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerS
 import ceramicStartStyle from './CeramicStartStyle.module.css';
 import { ChevronsRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { PageDataInfo } from "../../types/PageData";
+import { ProductData } from "../../types/Product";
 
 function CeramikStartPage() {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [loadingSpinnerPosts, setLoadingSpinnerPosts] = useState(false);
   const [pageError, setPageError] = useState("");
   const [productsError, setProductsError] = useState("");
-  const [ceramicInfo, setCeramicInfo] = useState<string>("");
-  const [ceramicProducts, setCeramicProducts] = useState<any>([]);
+  const [ceramicInfo, setCeramicInfo] = useState<PageDataInfo | null>(null);
+  const [ceramicProducts, setCeramicProducts] = useState<ProductData[]>([]);
 
   const isLoading = loadingSpinner || loadingSpinnerPosts;
 
@@ -32,7 +34,7 @@ function CeramikStartPage() {
 
 
         if (data.length > 0) {
-          setCeramicInfo(data[0].content.rendered);
+          setCeramicInfo(data[0]);
           setLoadingSpinner(false);
 
         } else {
@@ -97,7 +99,8 @@ function CeramikStartPage() {
             <p>{pageError}</p>
           ) : (
             <div className={ceramicStartStyle.ceramicContainer}>
-              {ceramicInfo && parse(ceramicInfo)}
+              <div className={ceramicStartStyle.ceramicTitle}>{ceramicInfo && parse(ceramicInfo.title.rendered)}</div>
+              {ceramicInfo && parse(ceramicInfo.content.rendered)}
             </div>
           )}
         </div>
@@ -111,7 +114,7 @@ function CeramikStartPage() {
           ) : (
             <div className="mx-auto max-w-[100rem]">
               <h3 className="text-center mt-40 mb-4">Senaste keramik</h3>
-              <div className="flex gap-8 justify-between">
+              <div className="flex gap-8 justify-between p-4">
                 {ceramicProducts.map((product: any) => (
                   product && (
                     <Link key={product.id} to={`/keramik-produkt/${product.id}`} className={ceramicStartStyle.ceramicProductLink}>
