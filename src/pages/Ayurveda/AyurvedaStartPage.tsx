@@ -110,7 +110,7 @@ function AyurvedaStartPage() {
           ) : (
             <div className={AyurvedaStyle.ayurvedaContainer}>
 
-              <div className={AyurvedaStyle.ayurvedaTitle}>{ayurvedaPage && parse(ayurvedaPage.title.rendered)}</div>
+              <h1 className={AyurvedaStyle.ayurvedaTitle}>{ayurvedaPage && parse(ayurvedaPage.title.rendered)}</h1>
 
               {ayurvedaPage && parse(ayurvedaPage.content.rendered)}
             </div>

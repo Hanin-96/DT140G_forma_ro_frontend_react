@@ -99,7 +99,7 @@ function CeramikStartPage() {
             <p>{pageError}</p>
           ) : (
             <div className={ceramicStartStyle.ceramicContainer}>
-              <div className={ceramicStartStyle.ceramicTitle}>{ceramicInfo && parse(ceramicInfo.title.rendered)}</div>
+              <h1 className={ceramicStartStyle.ceramicTitle}>{ceramicInfo && parse(ceramicInfo.title.rendered)}</h1>
               {ceramicInfo && parse(ceramicInfo.content.rendered)}
             </div>
           )}

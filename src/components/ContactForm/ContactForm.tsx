@@ -223,6 +223,7 @@ function ContactForm() {
                             <div className="p-8">
                                 <div className="flex justify-between gap-20">
                                     <div className="w-full">
+                                        <h3>Kontaktuppgifter</h3>
                                         <div>
                                             <label htmlFor="namn">Namn:</label>
                                             <input
@@ -267,6 +268,7 @@ function ContactForm() {
                                         </div>
                                     </div>
                                     <div className="w-full">
+                                        <h3>Meddelande:</h3>
                                         <div>
                                             <label htmlFor="subject">Ämne:</label>
                                             <select name="subject" id="subject" value={subject} onChange={(e) => setSubject(e.target.value)} className="shadow-sm">

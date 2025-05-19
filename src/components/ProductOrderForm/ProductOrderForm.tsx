@@ -295,7 +295,7 @@ const ProductOrderForm = observer(() => {
                                             <textarea
                                                 className="bg-white shadow-sm"
                                                 name="message"
-                                                placeholder="Ditt meddelande"
+                                                placeholder="Önskemål på produkten"
                                                 value={message}
                                                 rows={4}
                                                 onChange={(e) => setMessage(e.target.value)}

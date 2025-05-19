@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Question } from '../../types/DoshaQuiz'
-import quizStyle from './doshaQuiz.module.css';
+import quizStyle from './DoshaQuiz.module.css';
 import { ChevronLeft, ChevronRight, Flame, RotateCcw, Sprout, Wind } from 'lucide-react';
 import LoadingSpinnerStyle from '../LoadingSpinner/LoadingSpinnerStyle.module.css';
 
