@@ -37,11 +37,11 @@ function AyurvedaStartPage() {
           setLoadingSpinner(false);
 
         } else {
-          setPageError("Kunde inte ladda Keramik sidans innehåll.");
+          setPageError("Kunde inte ladda Ayurveda sidans innehåll.");
         }
       }
     } catch (error) {
-      setPageError("Kunde inte ladda Keramik sidans innehåll.");
+      setPageError("Kunde inte ladda Ayurveda sidans innehåll.");
     } finally {
       setLoadingSpinner(false);
     }
@@ -65,11 +65,11 @@ function AyurvedaStartPage() {
           setAyurvedaPosts(data);
           console.log("posts: ", data);
         } else {
-          setAyurvedaPostsError("Kunde inte ladda produkterna.");
+          setAyurvedaPostsError("Kunde inte ladda ayurveda inlägg.");
         }
       }
     } catch (error) {
-      setAyurvedaPostsError("Kunde inte ladda produkterna.");
+      setAyurvedaPostsError("Kunde inte ladda ayurveda inlägg.");
     } finally {
       setLoadingSpinnerPosts(false);
     }

@@ -25,28 +25,32 @@ const GalleriPage = observer(() => {
         <div className="mx-auto max-w-[100rem]">
           <h1 className="mt-20 mb-10">Galleri</h1>
 
-          <div className="mb-6">
-            <label htmlFor="SortOptions">Kategorier:</label>
-            <select name="sortOptions" id="sortOptions" onChange={(e) => productStore.setCategory(e.target.value)} value={productStore.selectedCategory}>
-              <option value={productStore.defaultCategory}>{productStore.defaultCategory}</option>
-              {productStore.productCategories.map((category) => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-              
-            </select>
+          <div className="mb-10 flex gap-[10rem] justify-between m-6 max-w-[100rem]">
+            <div className="w-full flex gap-4 items-center">
+              <label htmlFor="SortOptions" className="text-[16px]">Kategorier:</label>
+              <select name="sortOptions" id="sortOptions" className="w-full max-w-[50rem] text-[16px] cursor-pointer" onChange={(e) => productStore.setCategory(e.target.value)} value={productStore.selectedCategory}>
+                <option value={productStore.defaultCategory}>{productStore.defaultCategory}</option>
+                {productStore.productCategories.map((category) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
 
-            <label htmlFor="searchInput">Sök:</label>
-            <input type="text" name="searchInput" id="searchInput"
-            placeholder="Skriv namn på produkt"
-              value={productStore.searchInput}
-              onChange={(e) => {
-                productStore.setSearchInput(e.target.value);
-                productStore.searchProduct();
-              }}
-            />
+              </select>
+            </div>
+
+            <div className="w-full flex gap-4 items-center">
+              <label htmlFor="searchInput" className="text-[16px] inline">Sök:</label>
+              <input type="text" name="searchInput" id="searchInput" className="text-[16px] max-w-[50rem] w-full"
+                placeholder="Skriv namn på produkt"
+                value={productStore.searchInput}
+                onChange={(e) => {
+                  productStore.setSearchInput(e.target.value);
+                  productStore.searchProduct();
+                }}
+              />
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-16 justify-start">
+          <div className="flex flex-wrap gap-16 justify-start p-2">
             {productStore.paginatedProducts.map(product => (
               <Link key={product.id} to={`/keramik-produkt/${product.id}`} className="hover:no-underline">
                 <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center hover:bg-forma_ro_red">

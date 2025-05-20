@@ -216,7 +216,7 @@ function Calendar() {
                   <div key={index} className="flex flex-col justify-between gap-10">
                     <h4 className="font-bold text-[20px]">{event.title?.rendered}</h4>
                     <p>
-                      {dayjs(event.event_start_date).format("D MMM")} – {dayjs(event.event_end_date).format("D MMM")}
+                      {dayjs(event.event_start_date).format("D MMM HH:mm")} – {dayjs(event.event_end_date).format("D MMM HH:mm")}
                     </p>
                     <p><span className="font-bold">Plats:</span> {event.event_location}</p>
                     <p>{event.event_description}</p>

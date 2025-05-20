@@ -59,9 +59,6 @@ const ProductOrderForm = observer(() => {
             errors.amount = "Antal måste vara minst 1.";
         }
 
-        if (!data.message || data.message.trim().length < 5) {
-            errors.message = "Meddelande måste vara minst 5 tecken.";
-        }
         if (!data.phone || !/^(\+46|0)[\d\s-]{7,15}$/.test(data.phone.trim())) {
             errors.phone = "Telefonnumret är ogiltigt.";
         }
@@ -221,7 +218,7 @@ const ProductOrderForm = observer(() => {
 
     return (
         <>
-            <div className={"w-full max-w-[100rem] mx-auto mb-[20rem]"}>
+            <div className={"w-full max-w-[100rem] mx-auto mb-[10rem]"}>
                 <button onClick={() => toggleForm(!toggleOrderForm)} className="bg-forma_ro_red relative max-w-[100rem] p-4 w-full text-forma_ro_btn">
                     Skicka beställningsförfrågan
                     {(!toggleOrderForm) ? (<ChevronDown className="inline absolute m-4 right-0 top-0" />) : <ChevronUp className="inline absolute m-4 right-0 top-0" />}

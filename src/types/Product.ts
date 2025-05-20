@@ -12,6 +12,7 @@ export interface ProductData {
     product_category: ProductCategory[];
     product_price: string;
     product_description: string;
+    product_measurement: string;
     product_thumbnail: string;
     product_thumbnail_alt: string;
 }
