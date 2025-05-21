@@ -44,15 +44,15 @@ function Calendar() {
     }
   };
 
+  //Tar emot dag och kollar om den har ett event
   const hasEventForDate = (date: dayjs.Dayjs) => {
+    //Kollar om det finns event mellan start och slutdatum
     return eventData?.some((event: any) => {
       const start = dayjs(event.event_start_date);
       const end = dayjs(event.event_end_date);
-      return date.isBetween(start, end, "day", "[]"); // [] = inclusive
+      return date.isBetween(start, end, "day", "[]");
     });
   };
-
-
 
 
   dayjs.locale(locale);
@@ -84,6 +84,7 @@ function Calendar() {
         </div>
       );
     }
+    //Returnerar lista av dagar
     return <div className="row text-[16px]">{days}</div>
   };
 
@@ -97,7 +98,7 @@ function Calendar() {
     };
   };
 
-  //Hämta alla dagar
+  //Hämta alla dagar 
   const getAllDays = () => {
     const startOfMonth = currentMonth.startOf("month");
     const startDate = startOfMonth.startOf("week");
@@ -106,6 +107,7 @@ function Calendar() {
     const totalDays = 42;
     const days = [];
 
+    //Loopar igenom totala dagar som ska visas
     for (let i = 0; i < totalDays; i++) {
       const day = startDate.add(i, "day");
       days.push(formateDateObject(day));
@@ -116,22 +118,28 @@ function Calendar() {
     for (let i = 0; i < days.length; i += 7) {
       weeks.push({ dates: days.slice(i, i + 7) });
     }
-
+    //Lägger in värden i state
     setArrayOfDays(weeks);
   };
 
-  //Rendera ut alla celler
+  //Renderar ut alla celler
   const renderCells = () => {
     const rows: any = [];
 
+    //Loopar igenom varje vecka 
     arrayOfDays.forEach((week, index) => {
       const days: any = [];
 
+      //Loopar igenom varje dag i en vecka
       week.dates.forEach((d: any, i: any) => {
-        const dateObj = dayjs(`${d.year}-${d.month + 1}-${d.day}`); 
+        //Skapar upp day objekt
+        const dateObj = dayjs(`${d.year}-${d.month + 1}-${d.day}`);
 
+        //Kollar om dagen är vald
         const isSelected = selectedDate?.isSame(dateObj, "day");
+        //Kollar om dagen har ett event
         const hasEvent = hasEventForDate(dateObj);
+        //Skapar upp hur dagen ska se ut
         days.push(
           <div
             key={i}
@@ -141,7 +149,15 @@ function Calendar() {
                 ? "selected"
                 : "text-forma_ro_black"
               }`}
-            onClick={() => hasEvent && setSelectedDate(dateObj)}
+            onClick={() => {
+              if (hasEvent) {
+                setSelectedDate(dateObj);
+              } else {
+                setSelectedDate(null);
+              }
+
+            }
+            }
           >
             <span
               className={`w-14 h-14 flex items-center justify-center rounded-full font-semibold
@@ -150,11 +166,12 @@ function Calendar() {
             >
               {d.day}
             </span>
-            
+
           </div>
         );
       });
 
+      //Skapar upp hela veckan som rad
       rows.push(
         <span className="row text-[16px]" key={index}>
           {days}
@@ -162,12 +179,16 @@ function Calendar() {
       );
     });
 
-    return <div className="body">{rows}</div>;
+    //Returner alla veckor som en grupp
+    return <div>{rows}</div>;
   };
 
+  //Hämtar event på vald dag
   const getEventsForSelectedDate = () => {
+    //Om inget är valt, returnera tom lista
     if (!selectedDate) return [];
 
+    //Filtrera fram valda dagar
     return eventData?.filter((event: any) => {
       const start = dayjs(event.event_start_date);
       const end = dayjs(event.event_end_date);
@@ -226,7 +247,10 @@ function Calendar() {
             </>
           ) : (
             <div className="p-4">
-              <p className="text-[16px] m-2">Välj ett datum med event</p>
+              <p className="text-[16px] m-2 flex items-center gap-4">Välj ett datum markerat med ett event <span
+                className={`w-14 h-14 flex items-center justify-center rounded-full has-event`}>
+              </span></p>
+
             </div>
           )}
         </div>
