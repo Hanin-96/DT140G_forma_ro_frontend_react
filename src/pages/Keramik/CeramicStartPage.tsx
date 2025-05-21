@@ -6,14 +6,16 @@ import { ChevronsRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PageDataInfo } from "../../types/PageData";
 import { ProductData } from "../../types/Product";
+import { observer } from "mobx-react-lite";
+import { productStore } from "../../stores/ProductStore";
 
-function CeramikStartPage() {
+const CeramicStartPage = observer(() => {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [loadingSpinnerPosts, setLoadingSpinnerPosts] = useState(false);
   const [pageError, setPageError] = useState("");
-  const [productsError, setProductsError] = useState("");
+  const [productsError, setProductsError] = useState<string | null>(null);
   const [ceramicInfo, setCeramicInfo] = useState<PageDataInfo | null>(null);
-  const [ceramicProducts, setCeramicProducts] = useState<ProductData[]>([]);
+
 
   const isLoading = loadingSpinner || loadingSpinnerPosts;
 
@@ -48,41 +50,22 @@ function CeramikStartPage() {
     }
   }
 
+  
   const getCeramicProducts = async () => {
     setLoadingSpinnerPosts(true);
+    setProductsError(null);
 
     try {
-      const response = await fetch("http://localhost:8002/wp-json/wp/v2/product?_fields=title,product_price,product_description,product_thumbnail,id,date", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-
-
-        if (data.length > 0) {
-          const sortedData = data.sort((a: { date: string }, b: { date: string }) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3);
-
-          setCeramicProducts(sortedData);
-          setLoadingSpinnerPosts(false);
-
-        } else {
-          setProductsError("Kunde inte ladda produkterna.");
-        }
-      }
+      await productStore.getCeramicProducts();
     } catch (error) {
       setProductsError("Kunde inte ladda produkterna.");
     } finally {
       setLoadingSpinnerPosts(false);
     }
-
   }
+ 
 
-  //useEffect för att hämta in Om sida innehåll
+  //useEffect för att hämta produktinnehåll
   useEffect(() => {
     getCeramicPageInfo();
     getCeramicProducts();
@@ -115,7 +98,7 @@ function CeramikStartPage() {
             <div className="mx-auto max-w-[100rem]">
               <h3 className="text-center mt-40 mb-4">Senaste keramik</h3>
               <div className="flex gap-8 justify-between p-4">
-                {ceramicProducts.map((product: any) => (
+                {productStore.allProducts.slice(0,3).map((product: ProductData) => (
                   product && (
                     <Link key={product.id} to={`/keramik-produkt/${product.id}`} className={ceramicStartStyle.ceramicProductLink}>
                       <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center">
@@ -131,7 +114,7 @@ function CeramikStartPage() {
               <Link to={`/keramik-galleri`} className="flex gap-1 justify-center mx-auto p-4 text-[20px] mt-20 bg-forma_ro_red w-full rounded-2xl">
                 Se alla produkter <ChevronsRight className="color-forma_ro_black" />
               </Link>
-              
+
             </div>
           )}
         </div>
@@ -140,6 +123,6 @@ function CeramikStartPage() {
       }
     </>
   )
-}
+});
 
-export default CeramikStartPage
+export default CeramicStartPage

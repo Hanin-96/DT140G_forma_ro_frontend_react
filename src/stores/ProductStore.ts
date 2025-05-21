@@ -2,8 +2,8 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ProductData } from "../types/Product";
 
 class ProductStore {
-    products: any[] = [];
-    allProducts: any[] = [];
+    products: ProductData[] = [];
+    allProducts: ProductData[] = [];
     productCategories: string[] = [];
     loading: boolean = false;
     error: string = "";

@@ -286,6 +286,9 @@ const ProductOrderForm = observer(() => {
                                                 value={amount}
                                                 onChange={(e) => setAmount(Number(e.target.value))}
                                             />
+                                            {
+                                                formErrors.amount && <p className="text-red-600 mt-[-1rem]">{formErrors.amount}</p>
+                                            }
                                         </div>
                                         <div>
                                             <label htmlFor="message">Övriga önskemål:</label>

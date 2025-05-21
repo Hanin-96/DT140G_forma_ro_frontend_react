@@ -51,7 +51,7 @@ function AyurvedaStartPage() {
     setLoadingSpinnerPosts(true);
 
     try {
-      const response = await fetch("http://localhost:8002/wp-json/custom/v1/posts?category=37&per_page=3", {
+      const response = await fetch("http://localhost:8002/wp-json/forma_ro/v2/posts?category=37&per_page=3", {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
