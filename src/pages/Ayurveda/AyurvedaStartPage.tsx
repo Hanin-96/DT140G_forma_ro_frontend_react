@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import AyurvedaStyle from './AyurvedaStyle.module.css';
 import { PageDataInfo } from '../../types/PageData';
 
-function AyurvedaStartPage() {
+//postStore
+import { observer } from 'mobx-react-lite';
+import { postStore } from "../../stores/PostStore";
+
+const AyurvedaStartPage = observer(() => {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [loadingSpinnerPosts, setLoadingSpinnerPosts] = useState(false);
   const [pageError, setPageError] = useState("");
   const [ayurvedaPostsError, setAyurvedaPostsError] = useState("");
-  const [ayurvedaPosts, setAyurvedaPosts] = useState<any[]>([]);
+  const [ayurvedaPosts, setAyurvedaPosts] = useState<any[] | null>([]);
   const [ayurvedaPage, setAyurvedaPage] = useState<PageDataInfo | null>(null);
+
 
 
   const isLoading = loadingSpinner || loadingSpinnerPosts;
@@ -49,25 +54,10 @@ function AyurvedaStartPage() {
 
   const getAyurvedaPosts = async () => {
     setLoadingSpinnerPosts(true);
+    setAyurvedaPosts(null);
 
     try {
-      const response = await fetch("http://localhost:8002/wp-json/forma_ro/v2/posts?category=37&per_page=3", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        if (data.length > 0) {
-          setAyurvedaPosts(data);
-          console.log("posts: ", data);
-        } else {
-          setAyurvedaPostsError("Kunde inte ladda ayurveda inlägg.");
-        }
-      }
+      await postStore.getAllPosts(37);
     } catch (error) {
       setAyurvedaPostsError("Kunde inte ladda ayurveda inlägg.");
     } finally {
@@ -127,10 +117,10 @@ function AyurvedaStartPage() {
             <div className="mx-auto max-w-[100rem]">
               <h3 className="text-center mt-40 mb-4">Senaste inlägg</h3>
               <div className='flex gap-8 justify-between p-4'>
-                {ayurvedaPosts.map((post: any) => (
+                {postStore.posts.slice(0,3).map((post: any) => (
 
                   <div key={post.id}>
-                    <Link to={`/ayurveda-inlagg/${post.id}`}>
+                    <Link to={`/ayurveda-inlagg/${post.id}`} className={AyurvedaStyle.ayurvedaPosts}>
                       <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center max-w-[30rem] w-full max-h-[60rem] h-full flex flex-col justify-between">
                         {post.image && (
                           <img
@@ -164,6 +154,6 @@ function AyurvedaStartPage() {
       )}
     </>
   )
-}
+});
 
 export default AyurvedaStartPage

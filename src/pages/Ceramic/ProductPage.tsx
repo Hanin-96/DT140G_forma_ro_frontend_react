@@ -10,7 +10,7 @@ import ceramicStartStyle from './CeramicStartStyle.module.css';
 const ProductPage = observer(() => {
 
     const { productId } = useParams();
-    console.log("Id:", productId);
+
 
     useEffect(() => {
         if (productId) {

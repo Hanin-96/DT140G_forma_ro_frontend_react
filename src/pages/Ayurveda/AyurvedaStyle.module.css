@@ -43,3 +43,11 @@
 .ayurvedaContainer p {
     color: white;
 }
+
+.ayurvedaPosts:hover {
+    text-decoration: none;
+}
+
+.ayurvedaPosts article:hover {
+    background-color: #E09F3E;
+}

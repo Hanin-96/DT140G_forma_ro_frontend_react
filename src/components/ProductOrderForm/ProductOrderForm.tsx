@@ -16,6 +16,9 @@ const ProductOrderForm = observer(() => {
     const [toggleOrderForm, setToggleOrderForm] = useState(false);
     const [isOrderFormOpen, setIsOrderFormOpen] = useState(false);
 
+    const [isSending, setIsSending] = useState(false);
+
+
     //EmailJS states
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -74,6 +77,9 @@ const ProductOrderForm = observer(() => {
         //Hindrar automatisk redirect
         e.preventDefault();
 
+        if (isSending) return;
+
+
         const formData: OrderFormData = {
             name,
             email,
@@ -128,8 +134,13 @@ const ProductOrderForm = observer(() => {
         const templateId: string = import.meta.env.VITE_TEMPLATEIDORDER || "";
         const publicKey: string = import.meta.env.VITE_PUBLICKEY || "";
 
+        setIsSending(true);
+
+
         emailjs.send(serviceId, templateId, templateParams, publicKey)
             .then((response) => {
+                setIsSending(false);
+
                 if (response.status !== 200) {
                     formSubmitSend(templateParams);
                 }
@@ -339,7 +350,7 @@ const ProductOrderForm = observer(() => {
                             {
                                 fetchError && <p>{fetchError}</p>
                             }
-                            <button type="submit" className=" bg-forma_ro_red p-4 w-full text-forma_ro_btn">Skicka <Send className="inline" /></button>
+                            <button type="submit" className=" bg-forma_ro_red p-4 w-full text-forma_ro_btn" disabled={isSending}>Skicka <Send className="inline" /></button>
 
                         </form>
                     </div>

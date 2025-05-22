@@ -1,5 +1,4 @@
 .imageCircle {
-    border: 3px dashed;
     position: absolute;
     width: 340px;
     height: 340px;
@@ -12,11 +11,11 @@
 }
 
 .borderAyurveda {
-    border: 2px dashed #E09F3E;
+    border: 3px dashed #E09F3E;
 }
 
 .borderKeramik {
-    border: 2px dashed #D58B6A;
+    border: 3px dashed #D58B6A;
 }
 
 @keyframes circleAnim {

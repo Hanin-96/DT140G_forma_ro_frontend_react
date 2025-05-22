@@ -5,12 +5,13 @@ import DoshaPage from "./pages/Ayurveda/DoshaPage";
 import HomePage from "./pages/Home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
 import AboutPage from "./pages/About/AboutPage";
-import CeramicStartPage from "./pages/Keramik/CeramicStartPage";
-import GalleriPage from "./pages/Keramik/GalleriPage";
+import CeramicStartPage from "./pages/Ceramic/CeramicStartPage";
+import GalleriPage from "./pages/Ceramic/GalleriPage";
 import AyurvedaPostsPage from "./pages/Ayurveda/AyurvedaPostsPage";
-import ProductPage from "./pages/Keramik/ProductPage";
+import ProductPage from "./pages/Ceramic/ProductPage";
 import PostPage from "./pages/Ayurveda/PostPage";
 import CalendarPage from "./pages/Calendar/CalendarPage";
+import CeramicPostsPage from "./pages/Ceramic/CeramicPostsPage";
 
 
 const router = createBrowserRouter([
@@ -68,7 +69,7 @@ const router = createBrowserRouter([
                 )
             },
             {
-                path: "/ayurveda-inlagg/:id",
+                path: "/ayurveda-inlagg/:postId",
                 element: (
                     <PostPage />
                 )
@@ -103,6 +104,13 @@ const router = createBrowserRouter([
                 path: "/keramik-produkt/:productId",
                 element: (
                     <ProductPage />
+                )
+            },
+
+            {
+                path: "/keramik-inlagg",
+                element: (
+                    <CeramicPostsPage />
                 )
             },
             {

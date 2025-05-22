@@ -12,6 +12,7 @@ import type { FormData, FormErrors } from "../../types/FormData";
 function ContactForm() {
     const [toggleContactForm, setToggleContactForm] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isSending, setIsSending] = useState(false);
 
     //EmailJS states
     const [name, setName] = useState("");
@@ -70,6 +71,8 @@ function ContactForm() {
         //Hindrar automatisk redirect
         e.preventDefault();
 
+         if (isSending) return;
+
         const formData: FormData = {
             name,
             email,
@@ -121,9 +124,12 @@ function ContactForm() {
         const templateId: string = import.meta.env.VITE_TEMPLATEID || "";
         const publicKey: string = import.meta.env.VITE_PUBLICKEY || "";
 
+        setIsSending(true);
+
         emailjs.send(serviceId, templateId, templateParams, publicKey)
             .then((response) => {
-                if(response.status !== 200) {
+                setIsSending(false);
+                if (response.status !== 200) {
                     formSubmitSend(templateParams);
                 }
                 console.log("Formuläret har skickats", response);
@@ -162,8 +168,8 @@ function ContactForm() {
         formData.append("Telefonnummer:", templateParams.from_phone);
         formData.append("Ämne", templateParams.subject);
         formData.append("Meddelande", templateParams.message);
-        formData.append("_captcha", "false"); 
-        formData.append("_template", "table"); 
+        formData.append("_captcha", "false");
+        formData.append("_template", "table");
         try {
             fetch("https://formsubmit.co/7bad72b7e79fe36964d64d479d63ebd1", {
                 method: "POST",
@@ -326,7 +332,7 @@ function ContactForm() {
                             {
                                 fetchError && <p>{fetchError}</p>
                             }
-                            <button type="submit" className=" bg-forma_ro_green p-4 w-full text-forma_ro_btn">Skicka <Send className="inline" /></button>
+                            <button type="submit" className=" bg-forma_ro_green p-4 w-full text-forma_ro_btn" disabled={isSending}>Skicka <Send className="inline" /></button>
 
                         </form>
                     </div>

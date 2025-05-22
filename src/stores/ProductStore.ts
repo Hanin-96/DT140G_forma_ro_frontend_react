@@ -96,8 +96,10 @@ class ProductStore {
             return;
         }
 
-        this.loading = true;
-        this.error = "";
+        runInAction(() => {
+            this.loading = true;
+            this.error = "";
+        });
 
         try {
             const response = await fetch(

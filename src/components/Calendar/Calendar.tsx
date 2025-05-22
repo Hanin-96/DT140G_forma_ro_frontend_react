@@ -224,7 +224,7 @@ function Calendar() {
             {renderCells()}
           </div>
         </div>
-        <div className="max-w-[35rem] w-full bg-white rounded-2xl max-h-full shadow-sm">
+        <div className="max-w-[35rem] w-full bg-white rounded-2xl max-h-full shadow-md">
           {selectedDate ? (
             <>
               <div className="bg-forma_ro_green w-full rounded-t-2xl">
