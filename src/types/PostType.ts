@@ -2,6 +2,7 @@ export interface PostType {
     id: number;
     title: string;
     content: string;
+    excerpt: string;
     image: string;
     image_alt: string;
     tags: PostTags[];

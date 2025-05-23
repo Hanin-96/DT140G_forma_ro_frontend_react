@@ -1,4 +1,4 @@
- interface ProductCategory {
+ export interface ProductCategory {
     term_id: number;
     name: string;
     slug: string;

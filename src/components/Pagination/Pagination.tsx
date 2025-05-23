@@ -38,7 +38,7 @@ const Pagination: React.FC<PaginationInterface> = ({
     };
 
     return (
-        <div className='max-w-[100rem] border-[1px] border-forma_ro_grey mt-10 rounded-2xl'>
+        <div className='max-w-[100rem] border-[1px] border-forma_ro_grey mt-10 rounded-2xl m-2'>
             <ul className="flex gap-10 w-full justify-between max-w-fit mx-auto mt-5 mb-5">
                 <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                     <button onClick={(e) => handlePrevious(e)} className="flex text-[16px]" disabled={currentPage === 1}><ChevronLeft /> Föregående</button>

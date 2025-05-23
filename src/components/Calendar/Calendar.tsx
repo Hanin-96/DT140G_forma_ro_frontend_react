@@ -10,7 +10,6 @@ dayjs.extend(weekdayPlugin);
 dayjs.extend(isTodayPlugin);
 dayjs.extend(isBetweenPlugin);
 dayjs.locale("sv");
-dayjs.locale("sv");
 
 function Calendar() {
   const [fetchError, setFetchError] = useState("");
@@ -49,7 +48,7 @@ function Calendar() {
     //Kollar om det finns event mellan start och slutdatum
     return eventData?.some((event: any) => {
       const start = dayjs(event.event_start_date);
-      const end = dayjs(event.event_end_date);
+      const end = event.event_end_date ? dayjs(event.event_end_date) : start;
       return date.isBetween(start, end, "day", "[]");
     });
   };
@@ -74,18 +73,18 @@ function Calendar() {
   };
 
   //Loopar igenom dagar
-  const renderDays = () => {
+  const renderWeekDays = () => {
     const dateFormat = "dddd";
     const days = [];
     for (let i = 0; i < 7; i++) {
       days.push(
-        <div className="col" key={i}>
+        <div className="flex" key={i}>
           {now.weekday(i).format(dateFormat)}
         </div>
       );
     }
     //Returnerar lista av dagar
-    return <div className="row text-[16px]">{days}</div>
+    return <div className="flex justify-evenly text-[16px]">{days}</div>
   };
 
   const formateDateObject = (date: dayjs.Dayjs) => {
@@ -143,7 +142,7 @@ function Calendar() {
         days.push(
           <div
             key={i}
-            className={`col mb-4 cursor-pointer relative ${!d.isCurrentMonth
+            className={`flex justify-center mb-4 cursor-pointer relative ${!d.isCurrentMonth
               ? "text-forma_ro_light_grey"
               : d.isCurrentDay
                 ? "selected"
@@ -173,7 +172,7 @@ function Calendar() {
 
       //Skapar upp hela veckan som rad
       rows.push(
-        <span className="row text-[16px]" key={index}>
+        <span className="flex justify-evenly text-[16px]" key={index}>
           {days}
         </span>
       );
@@ -191,7 +190,7 @@ function Calendar() {
     //Filtrera fram valda dagar
     return eventData?.filter((event: any) => {
       const start = dayjs(event.event_start_date);
-      const end = dayjs(event.event_end_date);
+      const end = event.event_end_date ? dayjs(event.event_end_date) : start;
       return selectedDate.isBetween(start, end, "day", "[]");
     }) || [];
   };
@@ -206,7 +205,7 @@ function Calendar() {
   return (
     <>
       <div className="max-w-[100rem] w-full mx-auto flex mt-20 gap-10 justify-between">
-        <div className="max-w-[60rem] w-full border-forma_ro_grey border-[1px] rounded-2xl p-4">
+        <div className=" max-w-[60rem] w-full border-forma_ro_grey border-[1px] rounded-2xl p-4 max-h-[50rem] h-full">
           <div className=" flex items-center max-w-[60rem] w-full justify-between mb-8">
             <button onClick={() => prevMonth()}>
               <ChevronLeft />
@@ -219,7 +218,7 @@ function Calendar() {
 
           <div>
             <div className="mb-4">
-              {renderDays()}
+              {renderWeekDays()}
             </div>
             {renderCells()}
           </div>
@@ -234,13 +233,15 @@ function Calendar() {
               </div>
               <div className="p-4">
                 {getEventsForSelectedDate().map((event: any, index: number) => (
-                  <div key={index} className="flex flex-col justify-between gap-10">
+                  <div key={index} className="flex flex-col justify-between gap-4">
                     <h4 className="font-bold text-[20px]">{event.title?.rendered}</h4>
-                    <p>
-                      {dayjs(event.event_start_date).format("D MMM HH:mm")} – {dayjs(event.event_end_date).format("D MMM HH:mm")}
+                    <p><span className="font-bold">När: </span>
+                      {dayjs(event.event_start_date).format("D MMM HH:mm")} {event.event_end_date
+                        ? ` – ${dayjs(event.event_end_date).format("D MMM HH:mm")}`
+                        : ""}
                     </p>
                     <p><span className="font-bold">Plats:</span> {event.event_location}</p>
-                    <p>{event.event_description}</p>
+                    <p className="mb-10">{event.event_description}</p>
                   </div>
                 ))}
               </div>

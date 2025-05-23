@@ -103,7 +103,7 @@ class ProductStore {
 
         try {
             const response = await fetch(
-                "http://localhost:8002/wp-json/wp/v2/product?_fields=title,product_price,product_description,product_thumbnail,id,date,product_category",
+                "http://localhost:8002/wp-json/wp/v2/product?_fields=title,product_price,product_description,product_thumbnail,product_thumbnail_alt,id,date,product_category",
                 {
                     method: "GET",
                     headers: {
@@ -118,6 +118,7 @@ class ProductStore {
                 this.allProducts = data;
 
                 console.log("filtered id: ", productId)
+                console.log("Produkt: ", this.allProducts)
 
                 filteredData = this.excludeCurrentProduct(productId, filteredData);
 
@@ -187,7 +188,7 @@ class ProductStore {
     }
 
     //Extraherar unika kategorier
-    extractCategories(products: any[]): string[] {
+    extractCategories(products: ProductData[]): string[] {
         const list = products.flatMap((p) =>
             p.product_category?.map((c: any) => c.name) || []
         );

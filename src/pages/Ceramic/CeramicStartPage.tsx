@@ -50,7 +50,7 @@ const CeramicStartPage = observer(() => {
     }
   }
 
-  
+
   const getCeramicProducts = async () => {
     setLoadingSpinnerPosts(true);
     setProductsError(null);
@@ -63,7 +63,7 @@ const CeramicStartPage = observer(() => {
       setLoadingSpinnerPosts(false);
     }
   }
- 
+
 
   //useEffect för att hämta produktinnehåll
   useEffect(() => {
@@ -98,16 +98,20 @@ const CeramicStartPage = observer(() => {
             <div className="mx-auto max-w-[100rem]">
               <h3 className="text-center mt-40 mb-4">Senaste keramik</h3>
               <div className="flex gap-8 justify-between p-4">
-                {productStore.allProducts.slice(0,3).map((product: ProductData) => (
+                {productStore.allProducts.slice(0, 3).map((product: ProductData) => (
                   product && (
-                    <Link key={product.id} to={`/keramik-produkt/${product.id}`} className={ceramicStartStyle.ceramicProductLink}>
-                      <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center">
-                        <img src={product.product_thumbnail} alt={product.product_thumbnail_alt} className="rounded-t-2xl max-w-[30rem] max-h-[30rem] object-cover" />
+                    <article
+                      className={`border-[1px] border-forma_ro_grey rounded-3xl text-center max-w-[30rem] max-h-[50rem] h-auto w-full hover:bg-forma_ro_red`}
+                      key={product.id}
+                    >
+                      <Link to={`/keramik-produkt/${product.id}`} className="hover:no-underline">
+                        <img src={product.product_thumbnail} alt={product.product_thumbnail_alt} className="rounded-t-2xl max-w-[30rem] max-h-[30rem] h-full w-full object-cover" />
                         <h4 className="text-[20px] p-2 font-semibold">{product.title.rendered}</h4>
                         <p className="p-2">{product.product_price}:-</p>
                         <button className="flex gap-1 justify-center mx-auto p-2 text-[18px]">Se produkt  <ChevronsRight className="color-forma_ro_black" /></button>
-                      </article>
-                    </Link>
+                      </Link>
+                    </article>
+
                   )
                 ))}
               </div>

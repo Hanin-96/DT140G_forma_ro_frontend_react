@@ -121,7 +121,7 @@ const AyurvedaStartPage = observer(() => {
 
                   <div key={post.id}>
                     <Link to={`/ayurveda-inlagg/${post.id}`} className={AyurvedaStyle.ayurvedaPosts}>
-                      <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center max-w-[30rem] w-full max-h-[60rem] h-full flex flex-col justify-between">
+                      <article className="border-[1px] border-forma_ro_grey rounded-3xl text-center max-w-[30rem] w-full max-h-[60rem] h-full flex flex-col justify-between">
                         {post.image && (
                           <img
                             className="rounded-t-2xl max-w-[30rem] w-full max-h-[20rem] object-cover"
@@ -132,7 +132,7 @@ const AyurvedaStartPage = observer(() => {
                         <div className='p-2'>
                           <h4 className="text-[20px] p-2 font-semibold">{post.title}</h4>
                           <p>
-                            {trimText(post.excerpt, 150)}
+                            {trimText(post.content, 150)}
                           </p>
                           <br />
                           <p>Läs mer</p>

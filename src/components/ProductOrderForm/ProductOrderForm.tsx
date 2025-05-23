@@ -27,8 +27,8 @@ const ProductOrderForm = observer(() => {
     const [checkbox, setCheckbox] = useState(false);
     const [amount, setAmount] = useState<number | 1>(1);
 
-    const [skickat, setSkickat] = useState(false);
-    const [skickatMsg, setSkickatMsg] = useState("");
+    const [sent, setSent] = useState(false);
+    const [sentMsg, setSentMsg] = useState("");
     const [spamError, setSpamError] = useState("");
     const [formErrors, setFormErrors] = useState<FormErrors>({});
     //State för error i fetch anrop
@@ -152,13 +152,13 @@ const ProductOrderForm = observer(() => {
                 setMessage("");
                 setCheckbox(false);
                 setCaptchaResponse(null);
-                setSkickat(true);
+                setSent(true);
                 setSpamError("");
-                setSkickatMsg("Ditt meddelande till FormaRo har skickats.");
+                setSentMsg("Ditt meddelande till FormaRo har skickats.");
 
                 //Nollställer skickat meddelande efter 5s
                 setTimeout(() => {
-                    setSkickatMsg("");
+                    setSentMsg("");
                 }, 5000)
                 //Rensa felmeddelande
                 setFetchError(null);
@@ -199,10 +199,10 @@ const ProductOrderForm = observer(() => {
                         setMessage("");
                         setCheckbox(false);
                         setCaptchaResponse(null);
-                        setSkickat(true);
+                        setSent(true);
                         setSpamError("");
                         setFetchError("");
-                        setSkickatMsg("Ditt meddelande till FormaRo har skickats.");
+                        setSentMsg("Ditt meddelande till FormaRo har skickats.");
 
                     } else {
                         setFetchError("Det gick inte att skicka formuläret. Försök igen.");
@@ -356,8 +356,8 @@ const ProductOrderForm = observer(() => {
                     </div>
                 )}
 
-                {(skickat) &&
-                    <p className="p-4 max-w-[60rem] mx-auto text-center">{skickatMsg}</p>
+                {(sent) &&
+                    <p className="p-4 max-w-[60rem] mx-auto text-center">{sentMsg}</p>
                 }
             </div>
 

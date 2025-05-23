@@ -18,7 +18,7 @@
     color: white;
     font-size: 3.6rem;
     font-family: "DM Serif Display", serif;
-    align-content: center;
+    align-content: end;
 }
 
 .ceramicContainer :global(.blockOne) {
@@ -44,10 +44,3 @@
     color: white;
 }
 
-.ceramicProductLink:hover {
-    text-decoration: none;
-}
-
-.ceramicProductLink article:hover {
-    background-color: #D58B6A;
-}

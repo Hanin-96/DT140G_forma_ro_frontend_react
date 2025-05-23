@@ -4,10 +4,15 @@ import { PostType } from "../types/PostType";
 class PostStore {
 
 
-    posts: any[] = [];
+    posts: PostType[] = [];
+    allPosts: PostType[] = [];
     post: PostType | null = null;
     loading: boolean = false;
     error: string = "";
+    postCategories: string[] = [];
+    defaultCategory: string = "Alla inlägg"
+    selectedCategory: string = this.defaultCategory;
+    searchInput: string = "";
 
 
 
@@ -36,6 +41,10 @@ class PostStore {
             if (response.ok) {
                 const data = await response.json();
                 console.log("postdata: ", data);
+                this.allPosts = data;
+
+                this.postCategories = this.extractCategories(data);
+
                 runInAction(() => {
                     this.posts = data;
                     this.loading = false;
@@ -52,6 +61,74 @@ class PostStore {
             });
         }
 
+    }
+
+    setSearchInput(value: string) {
+        this.searchInput = value;
+    }
+
+    searchProduct() {
+        console.log("searchInput: ", this.searchInput)
+        //Kontrollerar om searchinput är tomt
+        if (this.searchInput == "") {
+            this.posts = this.allPosts;
+            this.selectedCategory = this.defaultCategory;
+            return;
+        }
+        //Kontrollerar om searchinput är mindre än tre tecken
+        if (this.searchInput.length < 3) {
+            //Returnerar om den är mindre än 3 tecken
+            return;
+        }
+        //Nollställer kategorin till alla produkter
+        this.selectedCategory = this.defaultCategory;
+
+        //Filtrerar fram produkter baserad på titel på produkt
+        const searchedProducts = this.allPosts.filter((postItem) => {
+            if (postItem.title.toLowerCase().includes(this.searchInput.toLowerCase())) {
+                return true;
+            }
+            return false;
+        });
+        this.posts = searchedProducts;
+        // Nollställer pagineringen
+        //this.setPage(1);
+    }
+
+    //hämtar produkter utifrån kategori
+    setCategory(categoryName: string) {
+        console.log("Kategori namn: ", categoryName);
+        this.selectedCategory = categoryName;
+
+        //Nollställer sökinput
+        this.setSearchInput("");
+
+        if (this.postCategories.includes(categoryName)) {
+            console.log("Kategori finns")
+            const filteredPosts = this.allPosts.filter((postItem) =>
+                //Kontrollerar om kategorin på produkt stämmer överens med kategori som filtreras fram
+                postItem.tags?.some(
+                    (category: any) => category.name === categoryName
+                )
+            );
+
+            this.posts = filteredPosts;
+
+        } else {
+            console.log("Kategori finns inte")
+            this.posts = this.allPosts;
+        }
+        //Nollställer paginering
+        //this.setPage(1);
+
+    }
+
+    //Extraherar unika kategorier
+    extractCategories(posts: PostType[]): string[] {
+        const list = posts.flatMap((p) =>
+            p.tags?.map((c: any) => c.name) || []
+        );
+        return [...new Set(list)];
     }
 
     //Hämta specifik post från Id

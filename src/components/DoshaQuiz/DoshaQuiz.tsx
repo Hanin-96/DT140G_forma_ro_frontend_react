@@ -106,7 +106,6 @@ function DoshaQuiz() {
         const topDosha = sorted[0].dosha;
 
         return topDosha;
-
     }
 
     const handlePrevious = () => {
@@ -145,7 +144,10 @@ function DoshaQuiz() {
                     <div className='bg-forma_ro_blue w-full max-w-3xl p-4 text-white rounded-2xl'>
                         <h1 className='text-center mb-10'>Dosha Quiz</h1>
                         <p className='text-white mt-4 text-center'>Varje fråga har tre alternativ – ett för varje dosha.
-                            Starta quiz nedan för att ta reda på din dosha typ.</p>
+                            Starta quiz nedan för att ta reda vilken dosha-typ som är mest framträdande hos dig.
+                            </p>
+                            <p className='text-white mt-4 text-center'>Inga svar lagras, du är därmed helt anonym när du genomför testet.</p>
+                            <p className='text-white mt-4 text-center'>Observera att quizet inte är att betrakta som medicinsk rådgivning, utan ska ses som en väg till självreflektion och inspiration.</p>
                         <button onClick={() => setHasStartedQuiz(true)} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl mt-20 text-forma_ro_black relative'>
                             Starta Quiz <ChevronRight className='inline absolute right-0'/>
                         </button>

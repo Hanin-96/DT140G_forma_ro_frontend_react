@@ -23,7 +23,7 @@ const ProductPage = observer(() => {
             {productStore.loading && <div className={LoadingSpinnerStyle.loadingSpinner}></div>}
             {productStore.product ? (
                 <div className="max-w-[100rem] w-full mx-auto mt-10">
-                    <section className="flex justify-between gap-10 border-[1px] border-forma_ro_grey rounded-t-2xl p-8">
+                    <section className="flex justify-between gap-10 border-[1px] border-forma_ro_grey rounded-t-2xl p-8 items-center">
                         <div className="max-w-[40rem] w-full">
                             <h1 className="mb-10">{productStore.product.title.rendered}</h1>
                             <p>{productStore.product.product_price}kr</p>
@@ -35,8 +35,8 @@ const ProductPage = observer(() => {
                             </div>
                             <p className="mt-10">{productStore.product.product_description}</p>
                         </div>
-                        <div>
-                            <img src={productStore.product.product_thumbnail} alt={productStore.product.product_thumbnail_alt} className="object-fit w-full mb-10 rounded-2xl" />
+                        <div className="aspect-square w-full max-w-[50rem]">
+                            <img src={productStore.product.product_thumbnail} alt={productStore.product.product_thumbnail_alt} className="object-cover w-full rounded-2xl shadow-sm h-full" />
                         </div>
                     </section>
 
@@ -46,9 +46,9 @@ const ProductPage = observer(() => {
                         <h3 className="mt-40 mb-10 bg-forma_ro_brown text-white p-2">Andra produkter</h3>
                         <div className="flex justify-between gap-8">
                             {productStore.products.slice(0, 3).map((product) => (
-                                <Link key={product.id} to={`/keramik-produkt/${product.id}`} className={ceramicStartStyle.ceramicProductLink}>
-                                    <article className="border-[1px] border-forma_ro_grey rounded-2xl text-center">
-                                        <img src={product.product_thumbnail} alt={product.product_thumbnail_alt} className="rounded-t-2xl max-w-[30rem] max-h-[30rem] object-cover" />
+                                <Link key={product.id} to={`/keramik-produkt/${product.id}`} className="hover:no-underline">
+                                    <article className="border-[1px] border-forma_ro_grey rounded-3xl text-center max-w-[30rem] h-full w-full hover:bg-forma_ro_red">
+                                        <img src={product.product_thumbnail} alt={product.product_thumbnail_alt} className="rounded-t-2xl max-h-[30rem] max-w-[50rem] h-full w-full object-cover" />
                                         <h4 className="text-[20px] p-2 font-semibold">{product.title.rendered}</h4>
                                         <p className="p-2">{product.product_price}:-</p>
                                         <button className="flex gap-1 justify-center mx-auto p-2 text-[18px]">Se produkt  <ChevronsRight className="color-forma_ro_black" /></button>

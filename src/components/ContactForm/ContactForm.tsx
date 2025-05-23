@@ -22,8 +22,8 @@ function ContactForm() {
     const [subject, setSubject] = useState("");
     const [checkbox, setCheckbox] = useState(false);
 
-    const [skickat, setSkickat] = useState(false);
-    const [skickatMsg, setSkickatMsg] = useState("");
+    const [sent, setSent] = useState(false);
+    const [sentMsg, setSentMsg] = useState("");
     const [spamError, setSpamError] = useState("");
     const [formErrors, setFormErrors] = useState<FormErrors>({});
     //State för error i fetch anrop
@@ -140,13 +140,13 @@ function ContactForm() {
                 setMessage("");
                 setCheckbox(false);
                 setCaptchaResponse(null);
-                setSkickat(true);
+                setSent(true);
                 setSpamError("");
-                setSkickatMsg("Ditt meddelande till FormaRo har skickats.");
+                setSentMsg("Ditt meddelande till FormaRo har skickats.");
 
                 //Nollställer skickat meddelande efter 5s
                 setTimeout(() => {
-                    setSkickatMsg("");
+                    setSentMsg("");
                 }, 5000)
                 //Rensa felmeddelande
                 setFetchError(null);
@@ -185,10 +185,10 @@ function ContactForm() {
                         setMessage("");
                         setCheckbox(false);
                         setCaptchaResponse(null);
-                        setSkickat(true);
+                        setSent(true);
                         setSpamError("");
                         setFetchError("");
-                        setSkickatMsg("Ditt meddelande till FormaRo har skickats.");
+                        setSentMsg("Ditt meddelande till FormaRo har skickats.");
 
                     } else {
                         setFetchError("Det gick inte att skicka formuläret. Försök igen.");
@@ -338,8 +338,8 @@ function ContactForm() {
                     </div>
                 )}
 
-                {(skickat) &&
-                    <p className="p-4 max-w-[60rem] mx-auto text-center">{skickatMsg}</p>
+                {(sent) &&
+                    <p className="p-4 max-w-[60rem] mx-auto text-center">{sentMsg}</p>
                 }
             </div>
 

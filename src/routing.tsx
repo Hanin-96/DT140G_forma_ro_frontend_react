@@ -6,7 +6,7 @@ import HomePage from "./pages/Home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
 import AboutPage from "./pages/About/AboutPage";
 import CeramicStartPage from "./pages/Ceramic/CeramicStartPage";
-import GalleriPage from "./pages/Ceramic/GalleriPage";
+import GalleryPage from "./pages/Ceramic/GalleryPage";
 import AyurvedaPostsPage from "./pages/Ayurveda/AyurvedaPostsPage";
 import ProductPage from "./pages/Ceramic/ProductPage";
 import PostPage from "./pages/Ayurveda/PostPage";
@@ -97,7 +97,7 @@ const router = createBrowserRouter([
             {
                 path: "/keramik-galleri",
                 element: (
-                    <GalleriPage />
+                    <GalleryPage />
                 )
             },
             {

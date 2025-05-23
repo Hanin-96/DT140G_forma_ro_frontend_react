@@ -89,11 +89,24 @@ form select {
   width: 100%;
 }
 
+select {
+  background-color: white;
+  color: #1e1e1e;
+  cursor: pointer;
+}
 
-svg {
-  stroke: #1e1e1e;
+select option {
+  background-color: white;
+  color: #1e1e1e;
+}
+
+select option:checked {
+  background-color: #8A987A;
+  color: #1e1e1e;
 }
 
 
 
-
+svg {
+  stroke: #1e1e1e;
+}
