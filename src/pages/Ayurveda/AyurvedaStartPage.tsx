@@ -14,7 +14,6 @@ const AyurvedaStartPage = observer(() => {
   const [loadingSpinnerPosts, setLoadingSpinnerPosts] = useState(false);
   const [pageError, setPageError] = useState("");
   const [ayurvedaPostsError, setAyurvedaPostsError] = useState("");
-  const [ayurvedaPosts, setAyurvedaPosts] = useState<any[] | null>([]);
   const [ayurvedaPage, setAyurvedaPage] = useState<PageDataInfo | null>(null);
 
 
@@ -54,7 +53,6 @@ const AyurvedaStartPage = observer(() => {
 
   const getAyurvedaPosts = async () => {
     setLoadingSpinnerPosts(true);
-    setAyurvedaPosts(null);
 
     try {
       await postStore.getAllPosts(37);

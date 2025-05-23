@@ -255,6 +255,7 @@ function Calendar() {
             </div>
           )}
         </div>
+        {fetchError} && <p>{fetchError}</p>
 
       </div>
 

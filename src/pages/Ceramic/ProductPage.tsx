@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import ProductOrderForm from "../../components/ProductOrderForm/ProductOrderForm";
 import { ChevronsRight } from "lucide-react";
-import ceramicStartStyle from './CeramicStartStyle.module.css';
 
 const ProductPage = observer(() => {
 
