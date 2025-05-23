@@ -31,12 +31,16 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
+                path: "*",
+                element: <Navigate to="/" replace />
+            },
+            {
                 path: "/:slug",
                 element: (
                     <div>Valfri default sida</div>
                 ),
             },
-           
+
             {
                 path: "/kontakt",
                 element: (
