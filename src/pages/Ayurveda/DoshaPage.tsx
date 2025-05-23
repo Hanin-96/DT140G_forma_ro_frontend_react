@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import DoshaQuiz from "../../components/DoshaQuiz/DoshaQuiz";
 import DoshaPostsQuiz from "../../components/DoshaPostsQuiz/DoshaPostsQuiz";
 

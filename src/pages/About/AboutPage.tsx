@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import parse, {DOMNode, domToReact} from 'html-react-parser';
+import parse, { domToReact} from 'html-react-parser';
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import AboutStyle from './AboutStyle.module.css';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,6 @@ function AboutPage() {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const [error, setError] = useState("");
   const [aboutInfo, setAboutInfo] = useState<string>("");
-  const [aboutPosts, setAboutPosts] = useState<any>([]);
 
 
 
