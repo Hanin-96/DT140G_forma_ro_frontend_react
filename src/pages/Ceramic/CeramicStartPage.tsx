@@ -37,6 +37,7 @@ const CeramicStartPage = observer(() => {
 
         if (data.length > 0) {
           setCeramicInfo(data[0]);
+          sessionStorage.setItem("ceramicStartPageInfo", JSON.stringify(data[0]));
           setLoadingSpinner(false);
 
         } else {
@@ -67,16 +68,20 @@ const CeramicStartPage = observer(() => {
 
   //useEffect för att hämta produktinnehåll
   useEffect(() => {
-    getCeramicPageInfo();
     getCeramicProducts();
+    const cachedCeramicStartPageInfo = sessionStorage.getItem("ceramicStartPageInfo");
+    if (cachedCeramicStartPageInfo) {
+      setCeramicInfo(JSON.parse(cachedCeramicStartPageInfo));
+      return;
+    }
+    getCeramicPageInfo();
+
+
   }, []);
   return (
     <>
-      {isLoading && (
-        <div className={LoadingSpinnerStyle.loadingSpinner}></div>
-      )}
 
-      {!loadingSpinner && (
+      {!loadingSpinner && !productsError && (
         <div>
           {pageError ? (
             <p>{pageError}</p>
@@ -87,6 +92,9 @@ const CeramicStartPage = observer(() => {
             </div>
           )}
         </div>
+      )}
+      {isLoading && (
+        <div className={LoadingSpinnerStyle.loadingSpinner}></div>
       )}
 
       {!loadingSpinnerPosts && (

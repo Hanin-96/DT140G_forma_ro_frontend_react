@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import parse, { domToReact} from 'html-react-parser';
+import parse, { domToReact } from 'html-react-parser';
 import LoadingSpinnerStyle from '../../components/LoadingSpinner/LoadingSpinnerStyle.module.css';
 import AboutStyle from './AboutStyle.module.css';
 import { Link } from 'react-router-dom';
@@ -30,6 +30,7 @@ function AboutPage() {
 
         if (data.length > 0) {
           setAboutInfo(data[0].content.rendered);
+          sessionStorage.setItem("aboutPageInfo", JSON.stringify(data[0].content.rendered));
           setLoadingSpinner(false);
           console.log("AboutInfo content:", aboutInfo);
 
@@ -46,6 +47,11 @@ function AboutPage() {
 
   //useEffect för att hämta in Om sida innehåll
   useEffect(() => {
+    const cachedAboutPageInfo = sessionStorage.getItem("aboutPageInfo");
+    if (cachedAboutPageInfo) {
+      setAboutInfo(JSON.parse(cachedAboutPageInfo));
+      return;
+    }
     getAboutPageInfo();
     //getAboutPosts();
   }, []);
@@ -61,25 +67,25 @@ function AboutPage() {
             <p>{error}</p>
           ) : (
             <div className={AboutStyle.aboutContainer}>
-            {aboutInfo &&
-              parse(aboutInfo, {
-                replace: (node: any) => {
-                  if (node.name === "a" && node.attribs?.href) {
-                    const href = node.attribs.href;
-                    const isInternal = href.startsWith("/")
-          
-                    if (isInternal) {
-                      return (
-                        <Link to={href}>
-                          {domToReact(node.children)}
-                        </Link>
-                      );
+              {aboutInfo &&
+                parse(aboutInfo, {
+                  replace: (node: any) => {
+                    if (node.name === "a" && node.attribs?.href) {
+                      const href = node.attribs.href;
+                      const isInternal = href.startsWith("/")
+
+                      if (isInternal) {
+                        return (
+                          <Link to={href}>
+                            {domToReact(node.children)}
+                          </Link>
+                        );
+                      }
                     }
-                  }
-           
-                },
-              })}
-          </div>
+
+                  },
+                })}
+            </div>
           )}
         </div>
       )}

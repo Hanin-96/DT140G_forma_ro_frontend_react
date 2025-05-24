@@ -37,6 +37,7 @@ const AyurvedaStartPage = observer(() => {
 
         if (data.length > 0) {
           setAyurvedaPage(data[0]);
+          sessionStorage.setItem("ayurvedaStartPageInfo", JSON.stringify(data[0]));
           console.log("data[0]:", data[0])
           setLoadingSpinner(false);
 
@@ -80,6 +81,11 @@ const AyurvedaStartPage = observer(() => {
 
   //useEffect för att hämta in Om sida innehåll
   useEffect(() => {
+    const cachedAyurvedaStartPageInfo = sessionStorage.getItem("ayurvedaStartPageInfo");
+    if (cachedAyurvedaStartPageInfo) {
+      setAyurvedaPage(JSON.parse(cachedAyurvedaStartPageInfo));
+      return;
+    }
     getAyurvedaPageInfo();
     getAyurvedaPosts();
 
@@ -115,7 +121,7 @@ const AyurvedaStartPage = observer(() => {
             <div className="mx-auto max-w-[100rem]">
               <h3 className="text-center mt-40 mb-4">Senaste inlägg</h3>
               <div className='flex gap-8 justify-between p-4'>
-                {postStore.posts.slice(0,3).map((post: any) => (
+                {postStore.posts.slice(0, 3).map((post: any) => (
 
                   <div key={post.id}>
                     <Link to={`/ayurveda-inlagg/${post.id}`} className={AyurvedaStyle.ayurvedaPosts}>

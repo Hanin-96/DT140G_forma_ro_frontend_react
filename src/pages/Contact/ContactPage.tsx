@@ -26,6 +26,8 @@ function ContactPage() {
 
         if (data.length > 0) {
           setContactInfo(data);
+          //Lagra i sessionStorage
+          sessionStorage.setItem("contactPageInfo", JSON.stringify(data));
           setLoadingSpinner(false);
 
         } else {
@@ -41,6 +43,11 @@ function ContactPage() {
 
   //useEffect för att hämta in kontaktsida innehåll
   useEffect(() => {
+    const cachedContactPageInfo = sessionStorage.getItem("contactPageInfo");
+    if(cachedContactPageInfo) {
+      setContactInfo(JSON.parse(cachedContactPageInfo));
+      return;
+    }
     getContactPageInfo();
   }, []);
 

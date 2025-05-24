@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Question } from '../../types/DoshaQuiz'
 import quizStyle from './DoshaQuizStyle.module.css';
 import { ChevronLeft, ChevronRight, Flame, RotateCcw, Sprout, Wind } from 'lucide-react';
@@ -40,6 +40,7 @@ function DoshaQuiz() {
 
                 if (data.length > 0) {
                     setQuestions(data);
+                    sessionStorage.setItem("doshaQuizData", JSON.stringify(data));
                     setLoadingSpinner(false);
 
                 }
@@ -54,6 +55,11 @@ function DoshaQuiz() {
 
     //Hämta quizdata via getQuizData
     useEffect(() => {
+        const cachedDoshaQuizData = sessionStorage.getItem("doshaQuizData");
+        if (cachedDoshaQuizData) {
+            setQuestions(JSON.parse(cachedDoshaQuizData));
+            return;
+        }
         getQuizData();
     }, []);
 
@@ -145,11 +151,11 @@ function DoshaQuiz() {
                         <h1 className='text-center mb-10'>Dosha Quiz</h1>
                         <p className='text-white mt-4 text-center'>Varje fråga har tre alternativ – ett för varje dosha.
                             Starta quiz nedan för att ta reda vilken dosha-typ som är mest framträdande hos dig.
-                            </p>
-                            <p className='text-white mt-4 text-center'>Inga svar lagras, du är därmed helt anonym när du genomför testet.</p>
-                            <p className='text-white mt-4 text-center'>Observera att quizet inte är att betrakta som medicinsk rådgivning, utan ska ses som en väg till självreflektion och inspiration.</p>
+                        </p>
+                        <p className='text-white mt-4 text-center'>Inga svar lagras, du är därmed helt anonym när du genomför testet.</p>
+                        <p className='text-white mt-4 text-center'>Observera att quizet inte är att betrakta som medicinsk rådgivning, utan ska ses som en väg till självreflektion och inspiration.</p>
                         <button onClick={() => setHasStartedQuiz(true)} className='w-full p-4 text-[18px] bg-forma_ro_orange rounded-2xl mt-20 text-forma_ro_black relative'>
-                            Starta Quiz <ChevronRight className='inline absolute right-0'/>
+                            Starta Quiz <ChevronRight className='inline absolute right-0' />
                         </button>
                         {error && <p style={{ color: 'red' }}>{error}</p>}
                     </div>

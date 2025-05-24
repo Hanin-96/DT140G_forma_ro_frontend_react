@@ -29,6 +29,7 @@ function DoshaPostsQuiz() {
 
                 if (data.length > 0) {
                     setDoshaPosts(data[0].content.rendered);
+                    sessionStorage.setItem("doshaPostsData", JSON.stringify(data[0].content.rendered));
                     setLoadingSpinner(false);
                     console.log("Dosha inlägg content:", doshaPosts);
 
@@ -45,6 +46,11 @@ function DoshaPostsQuiz() {
 
     //useEffect för att hämta in Om sida innehåll
     useEffect(() => {
+        const cachedDoshaPosts = sessionStorage.getItem("doshaPostsData");
+        if (cachedDoshaPosts) {
+            setDoshaPosts(JSON.parse(cachedDoshaPosts));
+            return;
+        }
         getDoshaPagePosts();
     }, []);
 

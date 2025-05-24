@@ -41,11 +41,10 @@ class PostStore {
             if (response.ok) {
                 const data = await response.json();
                 console.log("postdata: ", data);
-                this.allPosts = data;
-
-                this.postCategories = this.extractCategories(data);
 
                 runInAction(() => {
+                    this.allPosts = data;
+                    this.postCategories = this.extractCategories(data);
                     this.posts = data;
                     this.loading = false;
                 });
@@ -55,11 +54,7 @@ class PostStore {
                 this.error = "Kunde inte hämta post inläggen.";
                 this.loading = false;
             });
-        } finally {
-            runInAction(() => {
-                this.loading = false;
-            });
-        }
+        } 
 
     }
 
@@ -90,7 +85,10 @@ class PostStore {
             }
             return false;
         });
-        this.posts = searchedProducts;
+        runInAction(() => {
+            this.posts = searchedProducts;
+        });
+
         // Nollställer pagineringen
         //this.setPage(1);
     }
@@ -112,11 +110,15 @@ class PostStore {
                 )
             );
 
-            this.posts = filteredPosts;
+            runInAction(() => {
+                this.posts = filteredPosts;
+            });
 
         } else {
             console.log("Kategori finns inte")
-            this.posts = this.allPosts;
+            runInAction(() => {
+                this.posts = this.allPosts;
+            });
         }
         //Nollställer paginering
         //this.setPage(1);
@@ -156,11 +158,7 @@ class PostStore {
                 this.error = "Kunde inte hämta post inläggen.";
                 this.loading = false;
             });
-        } finally {
-            runInAction(() => {
-                this.loading = false;
-            });
-        }
+        } 
 
     }
 }

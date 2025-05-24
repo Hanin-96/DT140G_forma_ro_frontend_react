@@ -36,8 +36,9 @@ function HomePage() {
                 });
                 console.log(imagesData);
                 setImages(imagesData);
+                sessionStorage.setItem("homePageImages", JSON.stringify(imagesData));
                 setLoadingSpinner(false);
-            
+
             }
 
         } catch (error) {
@@ -48,7 +49,13 @@ function HomePage() {
     };
 
     useEffect(() => {
+        const cachedImages = sessionStorage.getItem("homePageImages");
+        if (cachedImages) {
+            setImages(JSON.parse(cachedImages));
+            return;
+        }
         getHomePage();
+
     }, []);
 
     return (

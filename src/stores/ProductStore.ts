@@ -2,6 +2,9 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ProductData } from "../types/Product";
 
 class ProductStore {
+    //Cache produkter
+    productCache = new Map<string, ProductData>();
+    productsGalleryCache = new Map<string, ProductData[]>();
     products: ProductData[] = [];
     allProducts: ProductData[] = [];
     productCategories: string[] = [];
@@ -23,7 +26,7 @@ class ProductStore {
     }
 
     searchProduct() {
-        console.log("searchInput: ", this.searchInput)
+        //console.log("searchInput: ", this.searchInput)
         //Kontrollerar om searchinput är tomt
         if (this.searchInput == "") {
             this.products = this.allProducts;
@@ -52,14 +55,14 @@ class ProductStore {
 
     //hämtar produkter utifrån kategori
     setCategory(categoryName: string) {
-        console.log("Kategori namn: ", categoryName);
+        //console.log("Kategori namn: ", categoryName);
         this.selectedCategory = categoryName;
 
         //Nollställer sökinput
         this.setSearchInput("");
 
         if (this.productCategories.includes(categoryName)) {
-            console.log("Kategori finns")
+            //console.log("Kategori finns")
             const filteredProducts = this.allProducts.filter((productItem) =>
                 //Kontrollerar om kategorin på produkt stämmer överens med kategori som filtreras fram
                 productItem.product_category?.some(
@@ -70,7 +73,7 @@ class ProductStore {
             this.products = filteredProducts;
 
         } else {
-            console.log("Kategori finns inte")
+            //console.log("Kategori finns inte")
             this.products = this.allProducts;
         }
         //Nollställer paginering
@@ -96,11 +99,13 @@ class ProductStore {
             return;
         }
 
-        runInAction(() => {
-            this.loading = true;
-            this.error = "";
-        });
+        if (this.productsGalleryCache.has(productId)) {
+            this.products = this.productsGalleryCache.get(productId) || [];
+            return;
+        }
 
+        this.loading = true;
+        this.error = "";
         try {
             const response = await fetch(
                 "http://localhost:8002/wp-json/wp/v2/product?_fields=title,product_price,product_description,product_thumbnail,product_thumbnail_alt,id,date,product_category",
@@ -116,9 +121,12 @@ class ProductStore {
                 const data = await response.json();
                 let filteredData = data;
                 this.allProducts = data;
+                if (productId && productId !== "") {
+                    this.productsGalleryCache.set(productId, data);
+                }
 
-                console.log("filtered id: ", productId)
-                console.log("Produkt: ", this.allProducts)
+                //console.log("filtered id: ", productId)
+                //console.log("Produkt: ", this.allProducts)
 
                 filteredData = this.excludeCurrentProduct(productId, filteredData);
 
@@ -159,11 +167,14 @@ class ProductStore {
     //Hämtar produkt utifrån produkt Id
     async getProductById(productId: string) {
 
-        runInAction(() => {
-            this.loading = true;
-            this.error = "";
-            this.product = null;
-        });
+        if (this.productCache.has(productId)) {
+            this.product = this.productCache.get(productId) || null;
+            return;
+        }
+        this.loading = true;
+        this.error = "";
+        this.product = null;
+
 
         try {
             const response = await fetch(`http://localhost:8002/wp-json/wp/v2/product/${productId}`);
@@ -172,6 +183,7 @@ class ProductStore {
                 const data = await response.json();
                 runInAction(() => {
                     this.product = data;
+                    this.productCache.set(productId, data);
                     this.loading = false;
                 });
             }
